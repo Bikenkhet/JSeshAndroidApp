@@ -1,21 +1,14 @@
 package jsesh.editor;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.inputmethodservice.InputMethodService;
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.SparseArray;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,25 +20,19 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
-import javax.swing.Action;
 import javax.swing.ActionMap;
 
-import jsesh.android.JSeshInputMethodService;
-import jsesh.android.R;
 import jsesh.android.graphics.CanvasGraphics;
 import jsesh.editor.caret.MDCCaret;
 import jsesh.mdc.MDCSyntaxError;
 import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
 import jsesh.mdc.model.MDCPosition;
-import jsesh.mdc.model.TopItemList;
 import jsesh.mdc.model.operations.ModelOperation;
 import jsesh.mdcDisplayer.draw.ViewDrawer;
 import jsesh.mdcDisplayer.layout.MDCEditorKit;
@@ -53,7 +40,6 @@ import jsesh.mdcDisplayer.layout.SimpleViewBuilder;
 import jsesh.mdcDisplayer.mdcView.MDCView;
 import jsesh.mdcDisplayer.preferences.DrawingSpecification;
 import jsesh.mdcDisplayer.preferences.PageLayout;
-import jsesh.resources.ResourcesManager;
 import jsesh.search.MdCSearchQuery;
 import jsesh.swing.utils.GraphicsUtils;
 

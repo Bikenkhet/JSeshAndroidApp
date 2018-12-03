@@ -1,12 +1,9 @@
 package jsesh.android.app;
 
-import android.accessibilityservice.GestureDescription;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import jsesh.editor.HieroglyphicTextModel;
-import jsesh.editor.JMDCEditor;
 import jsesh.mdc.MDCSyntaxError;
 import jsesh.resources.ResourcesManager;
 

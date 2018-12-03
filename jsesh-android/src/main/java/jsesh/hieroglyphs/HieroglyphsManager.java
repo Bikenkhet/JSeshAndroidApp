@@ -192,7 +192,7 @@ public class HieroglyphsManager implements HieroglyphDatabaseInterface {
 	 * @see HieroglyphDatabaseInterface#getPossibilityFor(String, String)
 	 */
 	public PossibilitiesList getPossibilityFor(String phoneticValue,
-			String level) {
+                                               String level) {
 		PossibilitiesList result = null;
 		// Keyboard access...
 
