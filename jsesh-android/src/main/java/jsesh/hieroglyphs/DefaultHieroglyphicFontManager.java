@@ -3,6 +3,7 @@ package jsesh.hieroglyphs;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.prefs.Preferences;
 
 /**
@@ -102,6 +103,10 @@ public class DefaultHieroglyphicFontManager implements HieroglyphicFontManager {
 	public boolean hasNewSigns() {
 		return composite.hasNewSigns();
 	}
+
+    public SortedSet<String> getSimilarCodes(String code) {
+	    return composite.getSimilarCodes(code);
+    }
 
 	/*
 	 * (non-Javadoc)

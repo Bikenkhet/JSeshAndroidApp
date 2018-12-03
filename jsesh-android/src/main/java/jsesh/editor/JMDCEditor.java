@@ -11,9 +11,11 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GestureDetectorCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,6 +69,8 @@ public class JMDCEditor extends View {
 //    private TextPaint mTextPaint;
 //    private float mTextWidth;
 //    private float mTextHeight;
+
+    private GestureDetectorCompat gestureDetector;
 
     public JMDCEditor(Context context) {
         super(context);
@@ -135,6 +139,8 @@ public class JMDCEditor extends View {
 
         editorInit();
 
+        gestureDetector = new GestureDetectorCompat(this.getContext(), eventListener);
+        gestureDetector.setIsLongpressEnabled(true);
 
     }
 
@@ -181,7 +187,6 @@ public class JMDCEditor extends View {
             p.setColor(Color.WHITE);
             canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), p);
         }
-
         paintComponent(CanvasGraphics.create(canvas));
     }
 
@@ -271,6 +276,20 @@ public class JMDCEditor extends View {
 
 
     //VIEW side
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Dimension d = getPreferredSize();
+        setMeasuredDimension(d.width, d.height);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        //if (event.getAction() == MotionEvent.ACTION_MOVE) eventListener.onMove(event);
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 
     @Override
     protected void onFocusChanged(boolean gainFocus, int direction, @Nullable Rect previouslyFocusedRect) {
@@ -381,6 +400,7 @@ public class JMDCEditor extends View {
 
     public void revalidate() {
         //FIXME
+        requestLayout();
     }
 
     public void scrollRectToVisible(Rectangle r) {
@@ -428,7 +448,7 @@ public class JMDCEditor extends View {
     /**
      * Deals with events that occur on this object :
      */
-    //MDCEditorEventsListener eventListener;    //TEMP
+    MDCEditorEventsListener eventListener;
     /**
      * Basic Informations about drawing : fonts to use, line width, etc...
      *
@@ -484,7 +504,7 @@ public class JMDCEditor extends View {
 
         setScale(10.0);
 
-        //eventListener = new MDCEditorEventsListener(this);    //TEMP
+        eventListener = new MDCEditorEventsListener(this);
         new MDCEditorKeyManager(this);
     }
 
@@ -674,6 +694,7 @@ public class JMDCEditor extends View {
                 r.x -= 2;
                 r.y -= 2;
                 //SwingUtilities.invokeLater(new VisibilityScroller(r));    //TEMP
+                requestRectangleOnScreen(new Rect(r.x, r.y, r.x + r.width, r.y + r.height), true);
             }
         }
 
@@ -839,7 +860,7 @@ public class JMDCEditor extends View {
             drawer.flushCache();
         }
         revalidate();
-        repaint();
+        //repaint(); //     ???
     }
 
     public char getCurrentSeparator() {

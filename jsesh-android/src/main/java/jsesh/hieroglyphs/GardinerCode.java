@@ -321,7 +321,7 @@ public final class GardinerCode implements Comparable<GardinerCode> {
      * @return
      */
     public static boolean isCorrectGardinerCode(String code) {
-        return Pattern.matches(GARDINER_CODE_REGEXP_STRING, code);
+        return jseshPattern.matcher(code).matches();//Pattern.matches(GARDINER_CODE_REGEXP_STRING, code);
     }
 
     public static boolean isCorrectGardinerCodeIgnoreCase(String code) {

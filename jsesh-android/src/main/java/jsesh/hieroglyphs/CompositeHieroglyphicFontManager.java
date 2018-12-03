@@ -1,10 +1,13 @@
 package jsesh.hieroglyphs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -20,6 +23,8 @@ public class CompositeHieroglyphicFontManager implements HieroglyphicFontManager
 	List<HieroglyphicFontManager> managers;
 
 	SortedSet<String> codes;
+
+	HashMap<String, SortedSet<String>> similarCodes;
 
 	public CompositeHieroglyphicFontManager() {
 		managers = new ArrayList<HieroglyphicFontManager>();
@@ -95,5 +100,25 @@ public class CompositeHieroglyphicFontManager implements HieroglyphicFontManager
 		}
 		return result;
 	}
+
+	public SortedSet<String> getSimilarCodes(String code) {
+        Pattern p = Pattern.compile("([A-Z]+[0-9]+)([A-Z]*)$");
+	    if (similarCodes == null || hasNewSigns()) {
+	        similarCodes = new HashMap<String, SortedSet<String>>();
+	        for (String s : getCodes()) {
+                Matcher m = p.matcher(s.toUpperCase());
+                if (m.matches()) {
+                    if (!similarCodes.containsKey(m.group(1))) similarCodes.put(m.group(1), new TreeSet<String>());
+                    similarCodes.get(m.group(1)).add(s);
+                }
+            }
+        }
+        Matcher m = p.matcher(code.toUpperCase());
+	    if (m.matches()) {
+            SortedSet set = similarCodes.get(m.group(1));
+            if (set != null) return set;
+        }
+        return new TreeSet<String>();
+    }
 
 }

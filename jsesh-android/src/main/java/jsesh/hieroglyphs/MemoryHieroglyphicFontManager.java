@@ -80,7 +80,7 @@ public class MemoryHieroglyphicFontManager implements HieroglyphicFontManager {
 					//    ClassLoader.getSystemClassLoader().getResourceAsStream(rbase + fontNames[i]);    
 					reader.read(f);
 					fonts[i] = builder.getFont();
-					// f.close(); Where should I put close ????
+					f.close(); //TODO Where should I put close ????
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -113,6 +113,16 @@ public class HieroglyphsManager implements HieroglyphDatabaseInterface {
 	}
 
 	/**
+	 * Return all similar codes to the given code
+	 *
+	 * @param code
+	 * @return
+	 */
+	public Set<String> getSimilarCodesSet(String code) {
+		return DefaultHieroglyphicFontManager.getInstance().getSimilarCodes(code);
+	}
+
+	/**
 	 * Returns all the codes for a given family of signs.
 	 * <p>
 	 * If family is the empty string, will return all codes for all families.
@@ -251,7 +261,7 @@ public class HieroglyphsManager implements HieroglyphDatabaseInterface {
 				+ "[a-zA-Z]*$", Pattern.CASE_INSENSITIVE);
 		// Build a sorted list of codes.
 		TreeSet<String> codes = new TreeSet<String>();
-		for (String signCode : getCodesSet()) {
+		for (String signCode : getSimilarCodesSet(code)) {
 			if (GardinerCode.isCorrectGardinerCode(signCode)) {
 				// The exact code should come first, if possible.
 				if (signCode.equalsIgnoreCase(code)) {

@@ -46,6 +46,10 @@ public class CanvasGraphics extends Graphics2D {
 
     private AffineTransform affineTransform;
 
+    private Matrix matrix;
+
+    private float scaleX = 1;
+
     private RenderingHints renderingHints;
 
     private Stroke stroke;
@@ -77,6 +81,8 @@ public class CanvasGraphics extends Graphics2D {
 
         affineTransform = new AffineTransform();
 
+        matrix = new Matrix();
+
         renderingHints = new RenderingHints(null);
 
         //TODO This should be handled through rendering hints
@@ -99,9 +105,18 @@ public class CanvasGraphics extends Graphics2D {
         PathIterator iterator = s.getPathIterator(null);
         Path path = GraphicsUtils.getPathFromIterator(iterator);
 
+        Matrix inv = new Matrix();
+        matrix.invert(inv);
+        canvas.concat(inv);
+        path.transform(matrix);
+
+        paint.setStrokeWidth(paint.getStrokeWidth()*scaleX);
         paint.setStyle(Paint.Style.STROKE);
 
+
         canvas.drawPath(path, paint);
+        canvas.concat(matrix);
+        paint.setStrokeWidth(paint.getStrokeWidth()/scaleX);
 
     }
 
@@ -125,10 +140,10 @@ public class CanvasGraphics extends Graphics2D {
         paint.setStyle(Paint.Style.FILL);
         //Use stroke width 0 for drawing text, it seems Graphics2D doesn't use it for text, but
         //canvas does?
-        paint.setStrokeWidth(0);
+        if (paint.getStrokeWidth() != 0) paint.setStrokeWidth(0);
         float tempStrokeWidth = paint.getStrokeWidth();
         canvas.drawText(str, x, y, paint);
-        paint.setStrokeWidth(tempStrokeWidth);
+        if (tempStrokeWidth != 0) paint.setStrokeWidth(tempStrokeWidth);
     }
 
     @Override
@@ -186,14 +201,18 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void fill(Shape s) {
-
         PathIterator iterator = s.getPathIterator(null);
         Path path = GraphicsUtils.getPathFromIterator(iterator);
 
-        paint.setStyle(Paint.Style.FILL);
+        Matrix inv = new Matrix();
+        matrix.invert(inv);
+        canvas.concat(inv);
+        path.transform(matrix);
 
+        paint.setStyle(Paint.Style.FILL);
         canvas.drawPath(path, paint);
 
+        canvas.concat(matrix);
     }
 
     @Override
@@ -248,6 +267,9 @@ public class CanvasGraphics extends Graphics2D {
         canvasGraphics.background = this.background;
 
         canvasGraphics.affineTransform = (AffineTransform) affineTransform.clone();
+        canvasGraphics.matrix = new Matrix(matrix);
+
+        canvasGraphics.scaleX = scaleX;
 
         //TODO Is this ok for copying? Won't work if original is used before dispose
         //TODO Seems alright with fix in dispose
@@ -262,6 +284,7 @@ public class CanvasGraphics extends Graphics2D {
     @Override
     public void translate(int x, int y) {
         affineTransform.translate(x, y);
+        matrix.preTranslate(x, y);
         canvas.translate(x, y);
     }
 
@@ -272,8 +295,10 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void setColor(Color c) {
-        color = c;
-        paint.setColor(c.getRGB());
+        if (color.getRGB() != c.getRGB()) {
+            color = c;
+            paint.setColor(c.getRGB());
+        }
     }
 
     @Override
@@ -415,30 +440,36 @@ public class CanvasGraphics extends Graphics2D {
     @Override
     public void translate(double tx, double ty) {
         affineTransform.translate(tx, ty);
+        matrix.preTranslate((float)tx, (float)ty);
         canvas.translate((float)tx, (float)ty);
     }
 
     @Override
     public void rotate(double theta) {
         affineTransform.rotate(theta);
+        matrix.preRotate((float)(theta*180.0/Math.PI));
         canvas.rotate((float)(theta*180.0/Math.PI));
     }
 
     @Override
     public void rotate(double theta, double x, double y) {
         affineTransform.rotate(theta, x, y);
+        matrix.preRotate((float)(theta*180.0/Math.PI), (float)x, (float)y);
         canvas.rotate((float)(theta*180.0/Math.PI), (float)x, (float)y);
     }
 
     @Override
     public void scale(double sx, double sy) {
         affineTransform.scale(sx, sy);
+        matrix.preScale((float)sx, (float)sy);
         canvas.scale((float)sx, (float)sy);
+        scaleX*=sx;
     }
 
     @Override
     public void shear(double shx, double shy) {
         affineTransform.shear(shx, shy);
+        //FIXME Matrix
         canvas.scale((float)shx, (float)shy);
     }
 
@@ -446,8 +477,9 @@ public class CanvasGraphics extends Graphics2D {
     public void transform(AffineTransform Tx) {
         //TODO Not this
         affineTransform.concatenate(Tx);
-
-        canvas.concat(GraphicsUtils.getMatrixFromAffineTransform(Tx));
+        Matrix m = new Matrix();
+        matrix.preConcat(m);
+        canvas.concat(m);
 
     }
 
@@ -455,7 +487,7 @@ public class CanvasGraphics extends Graphics2D {
     public void setTransform(AffineTransform Tx) {
         //TODO Not this
         affineTransform.setTransform(Tx);
-
+        //FIXME Matrix
         canvas.setMatrix(GraphicsUtils.getMatrixFromAffineTransform(Tx));
     }
 
@@ -466,8 +498,10 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void setBackground(Color color) {
-        background = color;
-        backgroundPaint.setColor(color.getRGB());
+        if (color.getRGB() != background.getRGB()) {
+            background = color;
+            backgroundPaint.setColor(color.getRGB());
+        }
     }
 
     @Override
