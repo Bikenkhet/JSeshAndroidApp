@@ -17,27 +17,27 @@
         app:layout_constraintTop_toTopOf="parent" />-->
 
 
-    <!--<ScrollView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:fillViewport="true">-->
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-        <!--<HorizontalScrollView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:fillViewport="true">-->
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
 
-            <!--<jsesh.editor.JMDCEditor-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent" />-->
+            <jsesh.editor.JMDCEditor
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <!--</HorizontalScrollView>-->
+        </HorizontalScrollView>
 
-    <!--</ScrollView>-->
+    </ScrollView>
 
-    <jsesh.editor.JMDCField
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    <!--<jsesh.editor.JMDCField-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content" />-->
 
     <android.inputmethodservice.KeyboardView
         android:id="@+id/jsesh_keyboard_view"

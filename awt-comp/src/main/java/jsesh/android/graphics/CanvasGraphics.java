@@ -476,7 +476,7 @@ public class CanvasGraphics extends Graphics2D {
     public void transform(AffineTransform Tx) {
         //TODO Not this
         affineTransform.concatenate(Tx);
-        Matrix m = new Matrix();
+        Matrix m = GraphicsUtils.getMatrixFromAffineTransform(Tx);
         matrix.preConcat(m);
         canvas.concat(m);
 
