@@ -1,0 +1,11 @@
+<resources>
+    <declare-styleable name="JMDCEditor">
+        <attr name="mdcText" format="string" />
+        <attr name="editable" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="JMDCField">
+        <attr name="fieldWidth" format="integer" />
+        <attr name="fieldHeight" format="integer" />
+    </declare-styleable>
+</resources>

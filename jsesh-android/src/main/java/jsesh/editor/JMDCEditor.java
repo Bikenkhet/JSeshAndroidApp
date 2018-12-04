@@ -1,6 +1,7 @@
 package jsesh.editor;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -27,6 +28,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ActionMap;
 
+import jsesh.android.R;
 import jsesh.android.graphics.CanvasGraphics;
 import jsesh.editor.caret.MDCCaret;
 import jsesh.mdc.MDCSyntaxError;
@@ -74,37 +76,15 @@ public class JMDCEditor extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-//        // Load attributes
-//        final TypedArray a = getContext().obtainStyledAttributes(
-//                attrs, R.styleable.JMDCEditor, defStyle, 0);
-//
-//        mExampleString = a.getString(
-//                R.styleable.JMDCEditor_exampleString); if (mExampleString == null) mExampleString = "Thing";
-//        mExampleColor = a.getColor(
-//                R.styleable.JMDCEditor_exampleColor,
-//                mExampleColor);
-//        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
-//        // values that should fall on pixel boundaries.
-//        mExampleDimension = a.getDimension(
-//                R.styleable.JMDCEditor_exampleDimension,
-//                mExampleDimension);
-//
-//        if (a.hasValue(R.styleable.JMDCEditor_exampleDrawable)) {
-//            mExampleDrawable = a.getDrawable(
-//                    R.styleable.JMDCEditor_exampleDrawable);
-//            mExampleDrawable.setCallback(this);
-//        }
-//
-//        a.recycle();
-//
-//        // Set up a default TextPaint object
-//        mTextPaint = new TextPaint();
-//        mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-//        mTextPaint.setTextAlign(Paint.Align.LEFT);
-//
-//        // Update TextPaint and text measurements from attributes
-//        invalidateTextPaintAndMeasurements();
+        // Load attributes
+        final TypedArray a = getContext().obtainStyledAttributes(
+                attrs, R.styleable.JMDCEditor, defStyle, 0);
 
+        String mdcText = a.getString(R.styleable.JMDCEditor_mdcText);
+        if (mdcText == null) mdcText = "";
+
+        boolean editable = a.getBoolean(R.styleable.JMDCEditor_editable, true);
+        setEditable(editable);
 
 
         setOnClickListener(new OnClickListener() {
@@ -123,48 +103,16 @@ public class JMDCEditor extends View {
 
         this.setBackgroundColor(Color.WHITE);
 
-        editorInit();
+        editorInit(mdcText);
 
         gestureDetector = new GestureDetectorCompat(this.getContext(), eventListener);
         gestureDetector.setIsLongpressEnabled(true);
 
     }
 
-//    private void invalidateTextPaintAndMeasurements() {
-//        mTextPaint.setTextSize(mExampleDimension);
-//        mTextPaint.setColor(mExampleColor);
-//        mTextWidth = mTextPaint.measureText(mExampleString);
-//
-//        Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-//        mTextHeight = fontMetrics.bottom;
-//    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-//        // TODO: consider storing these as member variables to reduce
-//        // allocations per draw cycle.
-//        int paddingLeft = getPaddingLeft();
-//        int paddingTop = getPaddingTop();
-//        int paddingRight = getPaddingRight();
-//        int paddingBottom = getPaddingBottom();
-//
-//        int contentWidth = getWidth() - paddingLeft - paddingRight;
-//        int contentHeight = getHeight() - paddingTop - paddingBottom;
-//
-//        // Draw the text.
-//        canvas.drawText(mExampleString,
-//                paddingLeft + (contentWidth - mTextWidth) / 2,
-//                paddingTop + (contentHeight + mTextHeight) / 2,
-//                mTextPaint);
-//
-//        // Draw the example drawable on top of the text.
-//        if (mExampleDrawable != null) {
-//            mExampleDrawable.setBounds(paddingLeft, paddingTop,
-//                    paddingLeft + contentWidth, paddingTop + contentHeight);
-//            mExampleDrawable.draw(canvas);
-//        }
 
         //Fill background
         {
@@ -175,91 +123,6 @@ public class JMDCEditor extends View {
         }
         paintComponent(CanvasGraphics.create(canvas));
     }
-
-//    /**
-//     * Gets the example string attribute value.
-//     *
-//     * @return The example string attribute value.
-//     */
-//    public String getExampleString() {
-//        return mExampleString;
-//    }
-//
-//    /**
-//     * Sets the view's example string attribute value. In the example view, this string
-//     * is the text to draw.
-//     *
-//     * @param exampleString The example string attribute value to use.
-//     */
-//    public void setExampleString(String exampleString) {
-//        mExampleString = exampleString;
-//        invalidateTextPaintAndMeasurements();
-//    }
-//
-//    /**
-//     * Gets the example color attribute value.
-//     *
-//     * @return The example color attribute value.
-//     */
-//    public int getExampleColor() {
-//        return mExampleColor;
-//    }
-//
-//    /**
-//     * Sets the view's example color attribute value. In the example view, this color
-//     * is the font color.
-//     *
-//     * @param exampleColor The example color attribute value to use.
-//     */
-//    public void setExampleColor(int exampleColor) {
-//        mExampleColor = exampleColor;
-//        invalidateTextPaintAndMeasurements();
-//    }
-//
-//    /**
-//     * Gets the example dimension attribute value.
-//     *
-//     * @return The example dimension attribute value.
-//     */
-//    public float getExampleDimension() {
-//        return mExampleDimension;
-//    }
-//
-//    /**
-//     * Sets the view's example dimension attribute value. In the example view, this dimension
-//     * is the font size.
-//     *
-//     * @param exampleDimension The example dimension attribute value to use.
-//     */
-//    public void setExampleDimension(float exampleDimension) {
-//        mExampleDimension = exampleDimension;
-//        invalidateTextPaintAndMeasurements();
-//    }
-//
-//    /**
-//     * Gets the example drawable attribute value.
-//     *
-//     * @return The example drawable attribute value.
-//     */
-//    public Drawable getExampleDrawable() {
-//        return mExampleDrawable;
-//    }
-//
-//    /**
-//     * Sets the view's example drawable attribute value. In the example view, this drawable is
-//     * drawn above the text.
-//     *
-//     * @param exampleDrawable The example drawable attribute value to use.
-//     */
-//    public void setExampleDrawable(Drawable exampleDrawable) {
-//        mExampleDrawable = exampleDrawable;
-//    }
-
-
-
-
-
-
 
     //VIEW side
 
@@ -293,6 +156,7 @@ public class JMDCEditor extends View {
     }
 
     public void showKeyboard() {
+        if (!isEditable()) return;
         InputMethodManager imm =(InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
     }
@@ -351,7 +215,8 @@ public class JMDCEditor extends View {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //System.out.println("YAY" + System.currentTimeMillis());
+        if (!isEditable()) return false;
+
         int flags = event.getMetaState();
         int actionMask = KeyEvent.META_CTRL_ON + KeyEvent.META_META_ON + KeyEvent.META_ALT_ON;
         int mask = actionMask + KeyEvent.META_SHIFT_ON;
@@ -458,14 +323,12 @@ public class JMDCEditor extends View {
 
     private boolean drawLimits = false;
 
-    public void editorInit() {
+    public void editorInit(String mdcText) {
         //FIXME Temp for demonstration
         HieroglyphicTextModel hieroglyphicTextModel = new HieroglyphicTextModel();
         try {
-            hieroglyphicTextModel.setMDCCode("G6-n:x*t-Q7");
-        } catch (MDCSyntaxError mdcSyntaxError) {
-            mdcSyntaxError.printStackTrace();
-        }
+            hieroglyphicTextModel.setMDCCode(mdcText);
+        } catch (MDCSyntaxError mdcSyntaxError) {}
         editorInit(hieroglyphicTextModel);
     }
 

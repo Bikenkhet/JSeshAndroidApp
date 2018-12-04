@@ -34,6 +34,7 @@ knowledge of the CeCILL license and that you accept its terms.
 package jsesh.editor;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
@@ -50,6 +51,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 //import javax.swing.KeyStroke;
 
+import jsesh.android.R;
 import jsesh.mdcDisplayer.preferences.PageLayout;
 import jsesh.swing.utils.GraphicsUtils;
 
@@ -94,8 +96,12 @@ public class JMDCField extends JMDCEditor {
     }
 
     public void init(AttributeSet attrs, int defStyle) {
-        int width = 800;
-        int height = 200;
+        //Load attributes
+        final TypedArray a = getContext().obtainStyledAttributes(
+                attrs, R.styleable.JMDCField, defStyle, 0);
+
+        int width = a.getInt(R.styleable.JMDCField_fieldWidth, 800);
+        int height = a.getInt(R.styleable.JMDCField_fieldHeight, 200);
 
         setCached(false);
         preferedSize= new Dimension(width,height);
