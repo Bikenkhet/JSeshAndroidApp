@@ -67,7 +67,13 @@ public class CanvasGraphics extends Graphics2D {
 
     }
 
-    private CanvasGraphics(Canvas canvas) {
+    public CanvasGraphics() {}
+
+    public CanvasGraphics(Canvas canvas) {
+        setCanvas(canvas);
+    }
+
+    public void setCanvas(Canvas canvas) {
 
         this.canvas = canvas;
         paint = new Paint();
@@ -86,8 +92,6 @@ public class CanvasGraphics extends Graphics2D {
 
         //TODO This should be handled through rendering hints
         paint.setAntiAlias(true);
-
-
 
     }
 
