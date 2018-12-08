@@ -17,6 +17,8 @@ public class MDCEditorEventsListener extends GestureDetector.SimpleOnGestureList
 
     boolean longPress = false;
 
+    Point longPressLocation;
+
     MDCEditorEventsListener(JMDCEditor editor) {
         this.editor = editor;
     }
@@ -105,8 +107,11 @@ public class MDCEditorEventsListener extends GestureDetector.SimpleOnGestureList
     @Override
     public void onLongPress(MotionEvent e) {
         //editor.getWorkflow().setMark(editor.getWorkflow().getCaret().getInsertPosition());
-        this.editor.moveMarkToMouse(new Point((int) e.getX(), (int) e.getY()));
-        editor.requestFocus();
+        //this.editor.moveMarkToMouse(new Point((int) e.getX(), (int) e.getY()));
+        //editor.requestFocus();
+
+        editor.showContextMenu();
+        longPressLocation = new Point((int) e.getX(), (int) e.getY());
 
         //longPress = true;
         //setDisallowParentScroll(true);

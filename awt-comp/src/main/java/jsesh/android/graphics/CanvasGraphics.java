@@ -190,7 +190,7 @@ public class CanvasGraphics extends Graphics2D {
         if (canvas != null) {
             for (int i=0;i<nest-canvas.getSaveCount();i++) canvas.save();
             //System.out.println("RESTORING:"+canvas.getSaveCount()+"|"+nest);
-            canvas.restore();
+            if (nest > 2) canvas.restore();
 
             //FOR GC purposes, hopefully
             canvas = null;

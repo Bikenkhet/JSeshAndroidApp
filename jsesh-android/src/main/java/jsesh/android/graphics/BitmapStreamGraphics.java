@@ -56,18 +56,22 @@ public class BitmapStreamGraphics extends CanvasGraphics {
     }
 
     public void dispose() {
-        proxy = null;
-        final String url = CapturePhotoUtils.insertImage(context.getContentResolver(), image, name, "", format.equals("png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
-        image = null;
-        name = null;
+        if (proxy != null) {
+            proxy = null;
+            final String url = CapturePhotoUtils.insertImage(context.getContentResolver(), image, name, "", format.equals("png") ? Bitmap.CompressFormat.PNG : Bitmap.CompressFormat.JPEG);
+            image = null;
+            name = null;
 
-        AndroidUtils.getActivity(context).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (url != null) Toast.makeText(context, "Saved to gallery.", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(context, "Failed to save to gallery. Ensure permissions are enabled.", Toast.LENGTH_SHORT).show();
-            }
-        });
+            AndroidUtils.getActivity(context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (url != null)
+                        Toast.makeText(context, "Saved to gallery.", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(context, "Failed to save to gallery. Ensure permissions are enabled.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     /*

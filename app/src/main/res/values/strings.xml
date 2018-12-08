@@ -1,3 +1,48 @@
 <resources>
     <string name="app_name">JSesh Android App</string>
+
+    <string name="export">Export</string>
+    <string name="export_bitmap">Export bitmap</string>
+
+    <string name="edit">Edit</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="cut">Cut</string>
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="delete">Delete</string>
+    <string name="select_all">Select All</string>
+    <string name="deselect_all">Deselect All</string>
+
+    <string name="group_manipulation">Group Manipulation</string>
+    <string name="group_horizontally">Group Horizontally</string>
+    <string name="group_vertically">Group Vertically</string>
+    <string name="ligature_elements">Ligature Elements</string>
+    <string name="ligature_group_with_hieroglyph">Ligature Group with Hieroglyph</string>
+    <string name="ligature_hieroglyph_with_group">Ligature Hieroglyph with Group</string>
+    <string name="explode_group">Explode Group</string>
+    <string name="edit_group">Edit Group</string>
+    <string name="insert_space">Insert Space</string>
+    <string name="insert_half_space">Insert Half Space</string>
+    <string name="new_page">New Page</string>
+    <string name="insert_red_point">Insert Red Point</string>
+    <string name="insert_black_point">Insert Black Point</string>
+    <string name="shading_symbols">Shading Symbols</string>
+        <string name="insert_full_size_shading">Insert Full Size Shading</string>
+        <string name="insert_horizontal_shading">Insert Horizontal Shading</string>
+        <string name="insert_vertical_shading">Insert Vertical Shading</string>
+        <string name="insert_quarter_shading">Insert Quarter Shading</string>
+    <string name="shade_zone">Shade Zone</string>
+    <string name="unshade_zone">Unshade Zone</string>
+    <string name="paint_zone_in_red">Paint Zone in Red</string>
+    <string name="paint_zone_in_black">Paint Zone in Black</string>
+    <string name="shading">Shading</string>
+    <string name="cartouches">Cartouches</string>
+    <string name="philological_markup">Philological Markup</string>
+
+
+
+
+
 </resources>

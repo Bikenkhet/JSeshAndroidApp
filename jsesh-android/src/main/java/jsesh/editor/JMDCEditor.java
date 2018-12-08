@@ -10,7 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +31,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ActionMap;
 
+import jsesh.android.AndroidUtils;
 import jsesh.android.R;
 import jsesh.android.graphics.CanvasGraphics;
 import jsesh.editor.caret.MDCCaret;
@@ -49,14 +53,6 @@ import jsesh.swing.utils.GraphicsUtils;
  * TODO: document your custom view class.
  */
 public class JMDCEditor extends View {
-//    private String mExampleString; // TODO: use a default from R.string...
-//    private int mExampleColor = Color.RED; // TODO: use a default from R.color...
-//    private float mExampleDimension = 0; // TODO: use a default from R.dimen...
-//    private Drawable mExampleDrawable;
-//
-//    private TextPaint mTextPaint;
-//    private float mTextWidth;
-//    private float mTextHeight;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -111,6 +107,30 @@ public class JMDCEditor extends View {
     }
 
     @Override
+    protected void onCreateContextMenu(ContextMenu menu) {
+        super.onCreateContextMenu(menu);
+        AndroidUtils.getActivity(getContext()).getMenuInflater().inflate(R.menu.jmdceditor_menu, menu);
+
+        final JMDCEditor editor = this;
+        final int length = menu.size();
+        for (int index = 0; index < length; index++) {
+            final MenuItem menuItem = menu.getItem(index);
+            menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId() == R.id.editor_select) {
+                        editor.moveMarkToMouse(eventListener.longPressLocation);
+                        editor.requestFocus();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+        }
+
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
@@ -129,7 +149,16 @@ public class JMDCEditor extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
         Dimension d = getPreferredSize();
+
+        if (widthMode == MeasureSpec.UNSPECIFIED) d.width = Math.max(d.width, widthSize);
+        if (heightMode == MeasureSpec.UNSPECIFIED) d.height = Math.max(d.height, heightSize);
+
         setMeasuredDimension(d.width, d.height);
     }
 
@@ -159,6 +188,20 @@ public class JMDCEditor extends View {
         if (!isEditable()) return;
         InputMethodManager imm =(InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //TODO Option to propagate?
+            hideKeyboard();
+        }
+        return false;
     }
 
 

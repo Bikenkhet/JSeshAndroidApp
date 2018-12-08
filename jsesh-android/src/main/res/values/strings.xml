@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JSesh Android</string>
+
+    <string name="select">Select</string>
 </resources>
