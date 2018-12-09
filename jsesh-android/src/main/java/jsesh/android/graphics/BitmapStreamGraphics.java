@@ -62,15 +62,16 @@ public class BitmapStreamGraphics extends CanvasGraphics {
             image = null;
             name = null;
 
-            AndroidUtils.getActivity(context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (url != null)
-                        Toast.makeText(context, "Saved to gallery.", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(context, "Failed to save to gallery. Ensure permissions are enabled.", Toast.LENGTH_SHORT).show();
-                }
-            });
+            //FIXME Activity is null because it is being destroyed (?)
+//            AndroidUtils.getActivity(context).runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (url != null)
+//                        Toast.makeText(context, "Saved to gallery.", Toast.LENGTH_SHORT).show();
+//                    else
+//                        Toast.makeText(context, "Failed to save to gallery. Ensure permissions are enabled.", Toast.LENGTH_SHORT).show();
+//                }
+//            });
         }
     }
 

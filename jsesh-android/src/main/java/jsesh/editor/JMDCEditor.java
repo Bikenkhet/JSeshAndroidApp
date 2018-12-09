@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.ContextMenu;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -52,7 +54,7 @@ import jsesh.swing.utils.GraphicsUtils;
 /**
  * TODO: document your custom view class.
  */
-public class JMDCEditor extends View {
+public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
 
     private GestureDetectorCompat gestureDetector;
 
@@ -98,6 +100,8 @@ public class JMDCEditor extends View {
         setLayerType(LAYER_TYPE_SOFTWARE, null);
 
         this.setBackgroundColor(Color.WHITE);
+
+        setInputType(InputType.TYPE_CLASS_TEXT);
 
         editorInit(mdcText);
 

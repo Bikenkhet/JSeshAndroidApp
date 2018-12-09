@@ -2,7 +2,7 @@
     <string name="app_name">JSesh Android App</string>
 
     <string name="export">Export</string>
-    <string name="export_bitmap">Export bitmap</string>
+    <string name="export_bitmap">Export Bitmap</string>
 
     <string name="edit">Edit</string>
     <string name="undo">Undo</string>
@@ -42,7 +42,17 @@
     <string name="philological_markup">Philological Markup</string>
 
 
-
+    <string name="cadrat_height">Cadrat Height</string>
+    <string name="transparency">Transparency</string>
+    <string name="directory">Directory</string>
+    <string name="file_name">File Name</string>
+    <string name="browse">Browse</string>
+    <string name="file_format">File Format</string>
+    <string name="png">png</string>
+    <string name="jpg">jpg</string>
+    <string name="save">Save</string>
+    <string name="default_cadrat_height">32</string>
+    <string name="default_bitmap_name">unnamed</string>
 
 
 </resources>

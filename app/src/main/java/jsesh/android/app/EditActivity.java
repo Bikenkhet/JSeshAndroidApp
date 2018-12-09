@@ -1,5 +1,6 @@
 package jsesh.android.app;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -220,8 +221,12 @@ public class EditActivity extends AppCompatActivity {
 
             //Export
             case R.id.export_bitmap:
-                BitmapExporter be = new BitmapExporter(this);
-                be.export(new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1));
+                StaticTransfer.obj = new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1);
+                Intent intent = new Intent(this, BitmapExporterActivity.class);
+                startActivity(intent);
+//                BitmapExporter be = new BitmapExporter(this.getApplicationContext());
+//                be.export((ExportData) StaticTransfer.obj);
+//                StaticTransfer.obj = null;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

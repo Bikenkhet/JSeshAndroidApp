@@ -75,8 +75,17 @@ public class BitmapExporter {
         multiFile = false;
         basename = "unnamed";
         transparency = true;
-        cadratHeight = 320;
+        cadratHeight = 32;
         //initFromPreferences();
+    }
+
+    public void applySettings(String filename, int cadratHeight, boolean transparency, int outputFormatIndex, boolean multiFile) {
+        this.outputFormatIndex = outputFormatIndex;
+        this.setSingleOutputFile(new File(filename + '.' + OUTPUT_FORMATS[outputFormatIndex]));
+        this.multiFile = multiFile;
+        this.basename = filename;
+        this.transparency = transparency;
+        this.cadratHeight = cadratHeight;
     }
 
 //    /**

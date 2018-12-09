@@ -378,7 +378,8 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void clearRect(int x, int y, int width, int height) {
-        canvas.drawRect(x, y, width, height, backgroundPaint);
+        //canvas.drawRect(x, y, width, height, backgroundPaint);
+        canvas.drawColor(backgroundPaint.getColor());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -501,10 +502,9 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void setBackground(Color color) {
-        if (color.getRGB() != background.getRGB()) {
-            background = color;
-            backgroundPaint.setColor(color.getRGB());
-        }
+        background = color;
+        backgroundPaint.setColor(color.getRGB());
+        backgroundPaint.setAlpha(color.getAlpha());
     }
 
     @Override
