@@ -1,7 +1,10 @@
 package jsesh.android.app;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,17 +19,29 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import jsesh.android.AndroidUtils;
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.JMDCEditorWorkflow;
-import jsesh.graphics.export.BitmapExporter;
 import jsesh.graphics.export.ExportData;
+import jsesh.mdc.MDCSyntaxError;
+import jsesh.mdc.constants.TextDirection;
+import jsesh.mdc.constants.TextOrientation;
+import jsesh.mdc.file.MDCDocument;
+import jsesh.mdc.file.MDCDocumentReader;
 import jsesh.resources.ResourcesManager;
 
 
 public class EditActivity extends AppCompatActivity {
 
     private boolean inEditMode = true;
+
+    MDCDocument mdcDocument;
+
+    public static final int READ_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +71,8 @@ public class EditActivity extends AppCompatActivity {
                 if (hasFocus) setEditMode(true);
             }
         });
+
+        mdcDocument = new MDCDocument();
 
     }
 
@@ -219,18 +236,118 @@ public class EditActivity extends AppCompatActivity {
                 //TODO
                 return true;
 
+            //File
+            case R.id.new_file:
+                //TODO
+                return true;
+            case R.id.open:
+                StaticTransfer.obj = this;
+                startActivity(new Intent(this, OpenActivity.class));
+                return true;
+            case R.id.open_recent:
+                //TODO
+                return true;
+            case R.id.close:
+                //TODO
+                return true;
+            case R.id.save:
+                if (mdcDocument.getFile() != null) {
+                    MDCDocument newDocument = new MDCDocument(editor.getHieroglyphicTextModel().getModel(), editor.getDrawingSpecifications());
+                    newDocument.setFile(mdcDocument.getFile());
+                    newDocument.setDialect(mdcDocument.getDialect());
+                    newDocument.setEncoding(mdcDocument.getEncoding());
+                    mdcDocument = newDocument;
+                    try {
+                        mdcDocument.save();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+            case R.id.save_as:
+                mdcDocument = new MDCDocument(editor.getHieroglyphicTextModel().getModel(), editor.getDrawingSpecifications());
+                StaticTransfer.obj = mdcDocument;
+                new DocumentSaverDialogFragment().show(getSupportFragmentManager(), "save");
+                return true;
+            case R.id.import_file:
+                //TODO
+                return true;
+            case R.id.export:
+                //TODO
+                return true;
+            case R.id.set_as_model:
+                //TODO
+                return true;
+            case R.id.use_model_preferences:
+                //TODO
+                return true;
+            case R.id.document_properties:
+                //TODO
+                return true;
+            case R.id.format:
+                //TODO
+                return true;
+            case R.id.text_in_lines:
+                item.setChecked(true);
+                editor.setTextOrientation(TextOrientation.HORIZONTAL);
+                return true;
+            case R.id.text_in_columns:
+                item.setChecked(true);
+                editor.setTextOrientation(TextOrientation.VERTICAL);
+                return true;
+            case R.id.left_to_right_text:
+                item.setChecked(true);
+                editor.setMDCTextDirection(TextDirection.LEFT_TO_RIGHT);
+                return true;
+            case R.id.right_to_left_text:
+                item.setChecked(true);
+                editor.setMDCTextDirection(TextDirection.RIGHT_TO_LEFT);
+                return true;
+            case R.id.center_small_signs:
+                item.setChecked(!item.isChecked());
+                editor.setSmallSignsCentered(item.isChecked());
+                return true;
+            case R.id.justify_text:
+                item.setChecked(!item.isChecked());
+                editor.getDrawingSpecifications().setJustified(item.isChecked());
+                return true;
+
             //Export
             case R.id.export_bitmap:
                 StaticTransfer.obj = new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1);
                 Intent intent = new Intent(this, BitmapExporterActivity.class);
                 startActivity(intent);
-//                BitmapExporter be = new BitmapExporter(this.getApplicationContext());
-//                be.export((ExportData) StaticTransfer.obj);
-//                StaticTransfer.obj = null;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            Uri uri = null;
+            if (data != null) {
+                uri = data.getData();
+                MDCDocumentReader reader = new MDCDocumentReader();
+                try {
+                    mdcDocument = reader.loadFile(new File(uri.getPath()));
+                    InputStream is = getContentResolver().openInputStream(uri);
+
+                    JMDCEditor editor = findViewById(R.id.main_jmdceditor);
+                    editor.setHieroglyphiTextModel(mdcDocument.getHieroglyphicTextModel());
+                    editor.getDrawingSpecifications().applyDocumentPreferences(mdcDocument.getDocumentPreferences());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
+            }
+
+        }
+
     }
 
 }

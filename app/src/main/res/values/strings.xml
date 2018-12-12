@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">JSesh Android App</string>
 
-    <string name="export">Export</string>
     <string name="export_bitmap">Export Bitmap</string>
 
     <string name="edit">Edit</string>
@@ -41,6 +40,25 @@
     <string name="cartouches">Cartouches</string>
     <string name="philological_markup">Philological Markup</string>
 
+    <string name="file">File</string>
+    <string name="new_file">New</string>
+    <string name="open">Open</string>
+    <string name="open_recent">Open Recent</string>
+    <string name="close">Close</string>
+    <string name="save">Save</string>
+    <string name="save_as">Save as...</string>
+    <string name="import_file">Import</string>
+    <string name="export">Export</string>
+    <string name="set_as_model">Set as Model</string>
+    <string name="use_model_preferences">Use Model Preferences</string>
+    <string name="document_properties">Document Properties</string>
+    <string name="format">Format</string>
+    <string name="text_in_lines">Text in Lines</string>
+    <string name="text_in_columns">Text in Columns</string>
+    <string name="left_to_right_text">Left to Right Text</string>
+    <string name="right_to_left_text">Right to Left Text</string>
+    <string name="center_small_signs">Center Small Signs</string>
+    <string name="justify_text">Justify Text</string>
 
     <string name="cadrat_height">Cadrat Height</string>
     <string name="transparency">Transparency</string>
@@ -50,9 +68,11 @@
     <string name="file_format">File Format</string>
     <string name="png">png</string>
     <string name="jpg">jpg</string>
-    <string name="save">Save</string>
     <string name="default_cadrat_height">32</string>
     <string name="default_bitmap_name">unnamed</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="default_file_name">unnamed</string>
 
 
 </resources>

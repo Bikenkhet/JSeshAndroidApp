@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="@string/file">
+        <menu>
+            <item android:id="@+id/new_file" android:title="@string/new_file"/>
+            <item android:id="@+id/open" android:title="@string/open"/>
+            <item android:id="@+id/open_recent" android:title="@string/open_recent"/>
+            <item android:id="@+id/close" android:title="@string/close"/>
+            <item android:id="@+id/save" android:title="@string/save"/>
+            <item android:id="@+id/save_as" android:title="@string/save_as"/>
+            <item android:id="@+id/import_file" android:title="@string/import_file"/>
+            <item android:id="@+id/export" android:title="@string/export">
+                <menu>
+                    <item android:id="@+id/export_bitmap"
+                        android:title="@string/export_bitmap"/>
+                </menu>
+            </item>
+            <item android:id="@+id/set_as_model" android:title="@string/set_as_model"/>
+            <item android:id="@+id/use_model_preferences" android:title="@string/use_model_preferences"/>
+            <item android:id="@+id/document_properties" android:title="@string/document_properties"/>
+            <item android:id="@+id/format" android:title="@string/format">
+                <menu>
+                    <group
+                        android:checkableBehavior="single">
+                        <item android:id="@+id/text_in_lines"
+                            android:title="@string/text_in_lines"
+                            android:checked="true"/>
+                        <item android:id="@+id/text_in_columns"
+                            android:title="@string/text_in_columns"/>
+                    </group>
+                    <group
+                        android:checkableBehavior="single">
+                        <item android:id="@+id/left_to_right_text"
+                            android:title="@string/left_to_right_text"
+                            android:checked="true"/>
+                        <item android:id="@+id/right_to_left_text"
+                            android:title="@string/right_to_left_text"/>
+                    </group>
+                    <item android:id="@+id/center_small_signs"
+                        android:title="@string/center_small_signs"
+                        android:checkable="true"/>
+                    <item android:id="@+id/justify_text"
+                        android:title="@string/justify_text"
+                        android:checkable="true"/>
+                </menu>
+            </item>
+        </menu>
+    </item>
+
     <item android:title="@string/edit">
         <menu>
             <item android:id="@+id/undo" android:title="@string/undo"/>
@@ -47,13 +94,6 @@
         </menu>
     </item>
 
-
-    <item android:title="@string/export">
-        <menu>
-            <item android:id="@+id/export_bitmap"
-                android:title="@string/export_bitmap"/>
-        </menu>
-    </item>
 
 
 

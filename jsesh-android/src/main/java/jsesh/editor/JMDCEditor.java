@@ -101,7 +101,7 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
 
         this.setBackgroundColor(Color.WHITE);
 
-        setInputType(InputType.TYPE_CLASS_TEXT);
+        setInputType(InputType.TYPE_CLASS_TEXT & InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         editorInit(mdcText);
 
@@ -756,7 +756,7 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
             drawer.flushCache();
         }
         revalidate();
-        //repaint(); //     ???
+        repaint(); //     ???
     }
 
     public char getCurrentSeparator() {
