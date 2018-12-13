@@ -3,6 +3,8 @@ package jsesh.mdcDisplayer.draw;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -32,7 +34,7 @@ public class Shader {
 		// Now we can work in page coordinate for everything...
 		// Let's take a rectangle large enough
 		Rectangle2D r = area.getBounds2D();
-
+		//System.out.println("SHADE: "+r.getX()+" "+r.getY()+" "+r.getWidth()+" "+r.getHeight());
 		// Now, we want to draw lines in this rectangle
 		// Those lines will be added to an area
 		Area shadingLines = new Area();
@@ -57,10 +59,19 @@ public class Shader {
 
 		// Add all relevant line segments to the area.
 		while (x < r.getMaxX()) {
-			Line2D l = new Line2D.Double(x, r.getMaxY(), x + r.getHeight(), r
-					.getMinY());
+			//ANDROID
+			//Patch to fix lack of good BasicStroke.createStrokedShape(Shape) equivalent
+			//Uses rotated rectangles instead of lines
+			double length = r.getHeight() + Math.abs(r.getMinX() - r.getMaxX());	//Taxicab distance, extra length shouldn't matter
+			//20/40 to fix gap between glyphs, arbitrary size, hopefully not scale dependent
+			Rectangle2D rect = new Rectangle.Double(-20, -0.25, length+40, 0.5d);
+			shadingLines.transform(AffineTransform.getTranslateInstance(-x, -r.getMaxY()));
+			shadingLines.transform(AffineTransform.getRotateInstance(Math.PI/4));
+			shadingLines.add(new Area(rect));
+			shadingLines.transform(AffineTransform.getRotateInstance(-Math.PI/4));
+			shadingLines.transform(AffineTransform.getTranslateInstance(x, r.getMaxY()));
+			//End of ANDROID
 
-			shadingLines.add(new Area(stroke.createStrokedShape(l)));
 			x += spacing;
 		}
 		// The area is ready. Intersect it with the original area

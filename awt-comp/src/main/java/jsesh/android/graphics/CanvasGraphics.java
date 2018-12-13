@@ -24,6 +24,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
@@ -480,7 +481,7 @@ public class CanvasGraphics extends Graphics2D {
     @Override
     public void transform(AffineTransform Tx) {
         //TODO Not this
-        affineTransform.concatenate(Tx);
+        affineTransform.preConcatenate(Tx);
         Matrix m = GraphicsUtils.getMatrixFromAffineTransform(Tx);
         matrix.preConcat(m);
         canvas.concat(m);
@@ -490,14 +491,22 @@ public class CanvasGraphics extends Graphics2D {
     @Override
     public void setTransform(AffineTransform Tx) {
         //TODO Not this
-        affineTransform.setTransform(Tx);
-        //FIXME Matrix
-        canvas.setMatrix(GraphicsUtils.getMatrixFromAffineTransform(Tx));
+        AffineTransform shiftTransform = (AffineTransform) Tx.clone();
+        try {
+            shiftTransform.preConcatenate(affineTransform.createInverse());
+        } catch (NoninvertibleTransformException e) {
+            e.printStackTrace();
+        }
+        affineTransform.concatenate(shiftTransform);
+
+        Matrix m = GraphicsUtils.getMatrixFromAffineTransform(shiftTransform);
+        matrix.preConcat(m);
+        canvas.concat(m);
     }
 
     @Override
     public AffineTransform getTransform() {
-        return affineTransform;
+        return (AffineTransform) affineTransform.clone();
     }
 
     @Override
