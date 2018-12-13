@@ -19,7 +19,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -73,6 +75,35 @@ public class EditActivity extends AppCompatActivity {
         });
 
         mdcDocument = new MDCDocument();
+
+        //Handle intent
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+
+        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_VIEW.equals(action)) {
+            Uri uri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (uri != null) {
+                try {
+
+                    InputStream is = getContentResolver().openInputStream(uri);
+                    MDCDocumentReader reader = new MDCDocumentReader();
+                    mdcDocument = reader.readStream(is, new File(".gly"));
+                    mdcDocument.setFile(null);
+
+                    JMDCEditor editor = findViewById(R.id.main_jmdceditor);
+                    editor.setHieroglyphiTextModel(mdcDocument.getHieroglyphicTextModel());
+                    editor.getDrawingSpecifications().applyDocumentPreferences(mdcDocument.getDocumentPreferences());
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 
@@ -348,6 +379,18 @@ public class EditActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
     }
 
 }
