@@ -14,7 +14,6 @@ public class GraphicsUtils {
 
         float[] coords = new float[6];
         int type;
-        int lastType = PathIterator.SEG_CLOSE;
         while (!iterator.isDone()) {
 
             type = iterator.currentSegment(coords);
@@ -40,12 +39,8 @@ public class GraphicsUtils {
             }
 
             iterator.next();
-            lastType = type;
 
         }
-
-        if (lastType != PathIterator.SEG_CLOSE) path.close();
-
 
         return path;
 
@@ -54,12 +49,9 @@ public class GraphicsUtils {
     public static Matrix getMatrixFromAffineTransform(AffineTransform Tx) {
 
         double[] affineArray = new double[6];
-        //float[] matrixArray = new float[9];
         Tx.getMatrix(affineArray);
-        //for (int i=0; i<6; i++) matrixArray[i] = (float)affineArray[i];
-        //matrixArray[8] = 1;
         Matrix matrix = new Matrix();
-        //matrix.setValues(matrixArray);
+
         matrix.setValues(new float[]{
                 (float)affineArray[0],
                 (float)affineArray[2],
