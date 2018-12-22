@@ -13,6 +13,12 @@
     <string name="delete">Delete</string>
     <string name="select_all">Select All</string>
     <string name="deselect_all">Deselect All</string>
+    <string name="edit_hieroglyphic_text">Edit Hieroglyphic Text</string>
+    <string name="edit_latin_text">Edit Latin Text</string>
+    <string name="edit_italic_text">Edit Italic Text</string>
+    <string name="edit_bold_text">Edit Bold Text</string>
+    <string name="edit_transliteration_text">Edit Transliteration Text</string>
+    <string name="edit_line_numbers">Edit Line Numbers</string>
 
     <string name="group_manipulation">Group Manipulation</string>
     <string name="group_horizontally">Group Horizontally</string>

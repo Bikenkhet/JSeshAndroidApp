@@ -6,6 +6,7 @@ package jsesh.mdcDisplayer.layout;
  */
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -181,18 +182,18 @@ public class SimpleLayout extends AbstractLayout {
             FontRenderContext fontRenderContext = drawingSpecifications
                     .getFontRenderContext();
 
-//            TextLayout layout = new TextLayout(text, f, fontRenderContext);       //TEMP TextLayout
-//
-//            dims = layout.getBounds();
-//
-//            currentView.setHeight((float) dims.getHeight());
-//
-//            currentView.setWidth(layout.getAdvance());
-//
-//            // centered hieroglyphs (later we will propose a system replacing
-//            // /2.0
-//            // with some stored data.
-//            // Align the text base with the hieroglyphs...
+            TextLayout layout = new TextLayout(text, f, fontRenderContext);
+
+            dims = layout.getBounds();
+
+            currentView.setHeight((float) dims.getHeight());
+
+            currentView.setWidth(layout.getAdvance());
+
+            // centered hieroglyphs (later we will propose a system replacing
+            // /2.0
+            // with some stored data.
+            // Align the text base with the hieroglyphs...
 //            currentView.setDeltaBaseY(+drawingSpecifications
 //                    .getMaxCadratHeight() / 2.0 - layout.getAscent());
         }

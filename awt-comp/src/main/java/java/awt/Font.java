@@ -57,7 +57,7 @@ public class Font implements Serializable {
         return font;
     }
 
-    private Font(Typeface typeface) {
+    public Font(Typeface typeface) {
         this.typeface = typeface;
     }
 

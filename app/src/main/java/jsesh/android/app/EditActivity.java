@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import jsesh.android.AndroidUtils;
+import jsesh.editor.HieroglyphicTextModel;
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.JMDCEditorWorkflow;
 import jsesh.graphics.export.ExportData;
@@ -34,6 +35,7 @@ import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
 import jsesh.mdc.file.MDCDocument;
 import jsesh.mdc.file.MDCDocumentReader;
+import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
 import jsesh.resources.ResourcesManager;
 
 
@@ -195,6 +197,24 @@ public class EditActivity extends AppCompatActivity {
             case R.id.deselect_all:
                 workflow.clearMark();
                 return true;
+            case R.id.edit_hieroglyphic_text:
+                workflow.setMode('s');
+                return true;
+            case R.id.edit_latin_text:
+                workflow.setMode('l');
+                return true;
+            case R.id.edit_italic_text:
+                workflow.setMode('i');
+                return true;
+            case R.id.edit_bold_text:
+                workflow.setMode('b');
+                return true;
+            case R.id.edit_transliteration_text:
+                workflow.setMode('t');
+                return true;
+            case R.id.edit_line_numbers:
+                workflow.setMode('|');
+                return true;
 
             //Group manipulation
             case R.id.group_horizontally:
@@ -228,22 +248,46 @@ public class EditActivity extends AppCompatActivity {
                 workflow.insertPageBreak();
                 return true;
             case R.id.insert_red_point:
-                //TODO
+                try {
+                    workflow.getHieroglyphicTextModel().insertMDCText(workflow.getCaret().getInsertPosition().getIndex(), "o");
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
                 return true;
             case R.id.insert_black_point:
-                //TODO
+                try {
+                    workflow.getHieroglyphicTextModel().insertMDCText(workflow.getCaret().getInsertPosition().getIndex(), "O");
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
                 return true;
             case R.id.insert_full_size_shading:
-                //TODO
+                try {
+                    workflow.getHieroglyphicTextModel().insertMDCText(workflow.getCaret().getInsertPosition().getIndex(), "//");
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
                 return true;
             case R.id.insert_horizontal_shading:
-                //TODO
+                try {
+                    workflow.getHieroglyphicTextModel().insertMDCText(workflow.getCaret().getInsertPosition().getIndex(), "h/");
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
                 return true;
             case R.id.insert_vertical_shading:
-                //TODO
+                try {
+                    workflow.getHieroglyphicTextModel().insertMDCText(workflow.getCaret().getInsertPosition().getIndex(), "v/");
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
                 return true;
             case R.id.insert_quarter_shading:
-                //TODO
+                try {
+                    workflow.getHieroglyphicTextModel().insertMDCText(workflow.getCaret().getInsertPosition().getIndex(), "/");
+                } catch (MDCSyntaxError mdcSyntaxError) {
+                    mdcSyntaxError.printStackTrace();
+                }
                 return true;
             case R.id.shade_zone:
                 workflow.shadeZone();
@@ -269,7 +313,10 @@ public class EditActivity extends AppCompatActivity {
 
             //File
             case R.id.new_file:
-                //TODO
+                mdcDocument = new MDCDocument();
+                editor.setHieroglyphiTextModel(new HieroglyphicTextModel());
+                editor.setDrawingSpecifications(new DrawingSpecificationsImplementation());
+                editor.getWorkflow().setMode('s');
                 return true;
             case R.id.open:
                 StaticTransfer.obj = this;
@@ -304,7 +351,7 @@ public class EditActivity extends AppCompatActivity {
                 //TODO
                 return true;
             case R.id.export:
-                //TODO
+                //NO-OP
                 return true;
             case R.id.set_as_model:
                 //TODO
@@ -316,7 +363,7 @@ public class EditActivity extends AppCompatActivity {
                 //TODO
                 return true;
             case R.id.format:
-                //TODO
+                //NO-OP
                 return true;
             case R.id.text_in_lines:
                 item.setChecked(true);

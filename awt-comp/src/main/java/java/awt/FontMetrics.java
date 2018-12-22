@@ -10,7 +10,7 @@ public class FontMetrics implements Serializable {
 
     private Paint paint;
 
-    protected FontMetrics(Font font) {
+    public FontMetrics(Font font) {
         this.font = font;
 
         paint = new Paint();

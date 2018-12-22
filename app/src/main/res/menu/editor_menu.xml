@@ -59,6 +59,12 @@
             <item android:id="@+id/delete" android:title="@string/delete"/>
             <item android:id="@+id/select_all" android:title="@string/select_all"/>
             <item android:id="@+id/deselect_all" android:title="@string/deselect_all"/>
+            <item android:id="@+id/edit_hieroglyphic_text" android:title="@string/edit_hieroglyphic_text"/>
+            <item android:id="@+id/edit_latin_text" android:title="@string/edit_latin_text"/>
+            <item android:id="@+id/edit_italic_text" android:title="@string/edit_italic_text"/>
+            <item android:id="@+id/edit_bold_text" android:title="@string/edit_bold_text"/>
+            <item android:id="@+id/edit_transliteration_text" android:title="@string/edit_transliteration_text"/>
+            <item android:id="@+id/edit_line_numbers" android:title="@string/edit_line_numbers"/>
         </menu>
     </item>
 

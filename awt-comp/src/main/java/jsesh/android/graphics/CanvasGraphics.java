@@ -91,6 +91,8 @@ public class CanvasGraphics extends Graphics2D {
 
         renderingHints = new RenderingHints(null);
 
+        font = new Font(paint.getTypeface());
+
         //TODO This should be handled through rendering hints
         paint.setAntiAlias(true);
 
@@ -136,7 +138,7 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void drawString(String str, int x, int y) {
-        throw new RuntimeException("NOT IMPLEMENTED");
+        drawString(str, (float)x, (float)y);
     }
 
     @Override
@@ -275,6 +277,8 @@ public class CanvasGraphics extends Graphics2D {
 
         canvasGraphics.scaleX = scaleX;
 
+        canvasGraphics.font = new Font(this.paint.getTypeface());
+
         //TODO Is this ok for copying? Won't work if original is used before dispose
         //TODO Seems alright with fix in dispose
         canvas.save();
@@ -318,7 +322,7 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public Font getFont() {
-        throw new RuntimeException("NOT IMPLEMENTED");
+        return font;
     }
 
     @Override
@@ -329,7 +333,7 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public FontMetrics getFontMetrics(Font f) {
-        return null;
+        return new FontMetrics(f);
     }
 
     @Override

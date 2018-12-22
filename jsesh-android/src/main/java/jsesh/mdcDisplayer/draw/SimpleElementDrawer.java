@@ -77,7 +77,7 @@ public class SimpleElementDrawer extends ElementDrawer {
             }
             g.setFont(drawingSpecifications.getFont(t.getScriptCode()));
 
-            g.drawString(text, 0, g.getFontMetrics().getAscent());   //ANDROID TEMP UNCOMMENTED
+            g.drawString(text, 0, (int) (drawingSpecifications.getMaxCadratHeight() / 2.0));   //ANDROID TEMP UNCOMMENTED
 //            FontRenderContext fontRenderContext = new FontRenderContext(
 //                    new AffineTransform(), true, true);
 //            // fontRenderContext= g.getFontRenderContext();
