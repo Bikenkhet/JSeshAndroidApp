@@ -18,7 +18,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -26,8 +26,46 @@
                 <data android:scheme="content" />
                 <data android:host="*" />
                 <data android:mimeType="*/*" />
-                <!--<data android:pathPattern=".*\\.gly" />-->
+                <data android:pathPattern=".*\\.gly" />
+            </intent-filter>-->
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.EDIT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="file"/>
+                <data android:scheme="content"/>
+                <data android:mimeType="*/*"/>
+                <data android:pathPattern=".*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\..*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gly"/>
+                <data android:host="*"/>
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.EDIT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="file"/>
+                <data android:scheme="content"/>
+                <data android:pathPattern=".*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\..*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gly"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gly"/>
+                <data android:host="*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.EDIT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:mimeType="application/vnd.gly" android:scheme="file"/>
+            </intent-filter>
+
         </activity>
 
         <activity android:name=".BitmapExporterActivity"

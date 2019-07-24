@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="jsesh_keyboard_view" type="id">jsesh_keyboard_view</item>
+    <!--<item name="jsesh_keyboard_view" type="id">jsesh_keyboard_view</item>-->
 </resources>

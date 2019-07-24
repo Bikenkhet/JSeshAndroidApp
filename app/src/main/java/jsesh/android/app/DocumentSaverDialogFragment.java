@@ -33,6 +33,7 @@ public class DocumentSaverDialogFragment extends DialogFragment {
                 mdcDocument.setFile(new File(getContext().getExternalFilesDir(null), filename + ".gly"));
                 try {
                     mdcDocument.save();
+                    RecentFiles.update(getContext(), filename + ".gly");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

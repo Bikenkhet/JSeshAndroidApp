@@ -50,6 +50,7 @@
     <string name="new_file">New</string>
     <string name="open">Open</string>
     <string name="open_recent">Open Recent</string>
+        <string name="clear_recent_files">Clear Recent Files</string>
     <string name="close">Close</string>
     <string name="save">Save</string>
     <string name="save_as">Save as...</string>

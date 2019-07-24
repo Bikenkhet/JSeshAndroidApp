@@ -33,17 +33,7 @@ public class OpenActivity extends AppCompatActivity {
                 String filename = (String) parent.getItemAtPosition(position);
                 if (StaticTransfer.obj instanceof EditActivity) {
                     EditActivity edit = ((EditActivity) StaticTransfer.obj);
-                    MDCDocumentReader reader = new MDCDocumentReader();
-                    try {
-                        edit.mdcDocument = reader.loadFile(new File(getExternalFilesDir(null), filename));
-                        JMDCEditor editor = edit.findViewById(R.id.main_jmdceditor);
-                        editor.setHieroglyphiTextModel(edit.mdcDocument.getHieroglyphicTextModel());
-                        editor.getDrawingSpecifications().applyDocumentPreferences(edit.mdcDocument.getDocumentPreferences());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (MDCSyntaxError mdcSyntaxError) {
-                        mdcSyntaxError.printStackTrace();
-                    }
+                    FileOpener.openFile(edit, filename);
 
                 };
                 finish();

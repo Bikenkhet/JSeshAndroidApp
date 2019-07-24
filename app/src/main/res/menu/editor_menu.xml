@@ -5,7 +5,13 @@
         <menu>
             <item android:id="@+id/new_file" android:title="@string/new_file"/>
             <item android:id="@+id/open" android:title="@string/open"/>
-            <item android:id="@+id/open_recent" android:title="@string/open_recent"/>
+            <item android:id="@+id/open_recent" android:title="@string/open_recent">
+                <menu>
+                    <group android:id="@+id/recent_files_group">
+                    </group>
+                    <item android:id="@+id/clear_recent_files" android:title="@string/clear_recent_files"/>
+                </menu>
+            </item>
             <item android:id="@+id/close" android:title="@string/close"/>
             <item android:id="@+id/save" android:title="@string/save"/>
             <item android:id="@+id/save_as" android:title="@string/save_as"/>
@@ -22,7 +28,8 @@
             <item android:id="@+id/format" android:title="@string/format">
                 <menu>
                     <group
-                        android:checkableBehavior="single">
+                        android:checkableBehavior="single"
+                        android:id="@+id/text_orientation_group">
                         <item android:id="@+id/text_in_lines"
                             android:title="@string/text_in_lines"
                             android:checked="true"/>
@@ -30,7 +37,8 @@
                             android:title="@string/text_in_columns"/>
                     </group>
                     <group
-                        android:checkableBehavior="single">
+                        android:checkableBehavior="single"
+                        android:id="@+id/text_direction_group">
                         <item android:id="@+id/left_to_right_text"
                             android:title="@string/left_to_right_text"
                             android:checked="true"/>

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -161,6 +162,15 @@ public class EditActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.editor_menu, menu);
+        MenuCompat.setGroupDividerEnabled(menu, true);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        RecentFiles.updateMenu(getApplicationContext(), menu.findItem(R.id.open_recent));
+
         return true;
     }
 
@@ -168,6 +178,13 @@ public class EditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         JMDCEditor editor = findViewById(R.id.main_jmdceditor);
         JMDCEditorWorkflow workflow = editor.getWorkflow();
+
+        switch (item.getGroupId()) {
+            case R.id.recent_files_group:
+                FileOpener.openFile(this, item.toString());
+                break;
+        }
+
         switch (item.getItemId()) {
             //Edit
             case R.id.undo:
@@ -325,6 +342,9 @@ public class EditActivity extends AppCompatActivity {
             case R.id.open_recent:
                 //TODO
                 return true;
+            case R.id.clear_recent_files:
+                RecentFiles.clear(getApplicationContext());
+                return true;
             case R.id.close:
                 //TODO
                 return true;
@@ -340,6 +360,8 @@ public class EditActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    String[] splitFilename = mdcDocument.getFile().getAbsolutePath().split(" ");
+                    RecentFiles.update(getApplicationContext(), splitFilename[splitFilename.length - 1]);
                     return true;
                 }
             case R.id.save_as:
