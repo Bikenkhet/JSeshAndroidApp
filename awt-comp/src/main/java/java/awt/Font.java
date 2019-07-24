@@ -33,6 +33,8 @@ public class Font implements Serializable {
 
     private float size = 1.0f;
 
+    private String name = "Default";
+
     public Typeface getTypeface() {
         return typeface;
     }
@@ -73,6 +75,8 @@ public class Font implements Serializable {
         this.pointSize = size;
         */
 
+        this.name = name;
+
         this.typeface = Typeface.create(name, style);   //FIXME !!! INCORRECT STYLE
 
         this.size = size;
@@ -108,4 +112,7 @@ public class Font implements Serializable {
         return size;
     }
 
+    public String getName() {
+        return name;
+    }
 }

@@ -30,7 +30,9 @@ import jsesh.android.AndroidUtils;
 import jsesh.editor.HieroglyphicTextModel;
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.JMDCEditorWorkflow;
+import jsesh.graphics.export.BitmapExporter;
 import jsesh.graphics.export.ExportData;
+import jsesh.graphics.export.pdfExport.PDFExporter;
 import jsesh.mdc.MDCSyntaxError;
 import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
@@ -47,6 +49,8 @@ public class EditActivity extends AppCompatActivity {
     MDCDocument mdcDocument;
 
     public static final int READ_REQUEST_CODE = 1;
+    public static final int BITMAP_EXPORTER_REQUEST_CODE = 100;
+    public static final int PDF_EXPORTER_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -414,10 +418,15 @@ public class EditActivity extends AppCompatActivity {
 
             //Export
             case R.id.export_bitmap:
-                StaticTransfer.obj = new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1);
                 Intent intent = new Intent(this, BitmapExporterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, BITMAP_EXPORTER_REQUEST_CODE);
                 return true;
+            case R.id.export_pdf:
+                StaticTransfer.obj = new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1);
+                Intent intent2 = new Intent(this, PDFExporterActivity.class);
+                startActivityForResult(intent2, PDF_EXPORTER_REQUEST_CODE);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -426,24 +435,55 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        //Commonly accessed
+        JMDCEditor editor = findViewById(R.id.main_jmdceditor);
 
-            Uri uri = null;
-            if (data != null) {
-                uri = data.getData();
-                MDCDocumentReader reader = new MDCDocumentReader();
-                try {
-                    mdcDocument = reader.loadFile(new File(uri.getPath()));
-                    InputStream is = getContentResolver().openInputStream(uri);
 
-                    JMDCEditor editor = findViewById(R.id.main_jmdceditor);
-                    editor.setHieroglyphiTextModel(mdcDocument.getHieroglyphicTextModel());
-                    editor.getDrawingSpecifications().applyDocumentPreferences(mdcDocument.getDocumentPreferences());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (MDCSyntaxError mdcSyntaxError) {
-                    mdcSyntaxError.printStackTrace();
-                }
+        if (resultCode == RESULT_OK) {
+
+            switch (requestCode) {
+
+                case READ_REQUEST_CODE:
+                    Uri uri = null;
+                    if (data != null) {
+                        uri = data.getData();
+                        MDCDocumentReader reader = new MDCDocumentReader();
+                        try {
+                            mdcDocument = reader.loadFile(new File(uri.getPath()));
+                            InputStream is = getContentResolver().openInputStream(uri);
+
+                            editor.setHieroglyphiTextModel(mdcDocument.getHieroglyphicTextModel());
+                            editor.getDrawingSpecifications().applyDocumentPreferences(mdcDocument.getDocumentPreferences());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (MDCSyntaxError mdcSyntaxError) {
+                            mdcSyntaxError.printStackTrace();
+                        }
+                    }
+                    break;
+
+                case BITMAP_EXPORTER_REQUEST_CODE:
+                    BitmapExporter bitmapExporter = new BitmapExporter(getApplicationContext());
+                    bitmapExporter.applySettings(
+                            data.getStringExtra("filename"),
+                            data.getIntExtra("cadratHeight", 0),
+                            data.getBooleanExtra("cadratHeight", false),
+                            data.getIntExtra("fileOutputFormat", 0),
+                            false);
+                    bitmapExporter.export(new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1));
+                    break;
+
+                case PDF_EXPORTER_REQUEST_CODE:
+//                    PDFExporter pdfExporter = new PDFExporter(getApplicationContext());
+//                    pdfExporter.applySettings(
+//                            data.getStringExtra("filename"),
+//                            data.getIntExtra("cadratHeight", 0),
+//                            data.getBooleanExtra("cadratHeight", false),
+//                            data.getIntExtra("fileOutputFormat", 0),
+//                            false);
+//                    bitmapExporter.export(new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1));
+                    break;
+
             }
 
         }

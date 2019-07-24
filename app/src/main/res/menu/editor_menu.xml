@@ -18,8 +18,8 @@
             <item android:id="@+id/import_file" android:title="@string/import_file"/>
             <item android:id="@+id/export" android:title="@string/export">
                 <menu>
-                    <item android:id="@+id/export_bitmap"
-                        android:title="@string/export_bitmap"/>
+                    <item android:id="@+id/export_bitmap" android:title="@string/export_bitmap"/>
+                    <item android:id="@+id/export_pdf" android:title="@string/export_pdf"/>
                 </menu>
             </item>
             <item android:id="@+id/set_as_model" android:title="@string/set_as_model"/>

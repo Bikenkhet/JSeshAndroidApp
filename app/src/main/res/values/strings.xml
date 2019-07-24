@@ -2,6 +2,7 @@
     <string name="app_name">JSesh Android App</string>
 
     <string name="export_bitmap">Export Bitmap</string>
+    <string name="export_pdf">Export PDF</string>
 
     <string name="edit">Edit</string>
     <string name="undo">Undo</string>
@@ -34,10 +35,10 @@
     <string name="insert_red_point">Insert Red Point</string>
     <string name="insert_black_point">Insert Black Point</string>
     <string name="shading_symbols">Shading Symbols</string>
-        <string name="insert_full_size_shading">Insert Full Size Shading</string>
-        <string name="insert_horizontal_shading">Insert Horizontal Shading</string>
-        <string name="insert_vertical_shading">Insert Vertical Shading</string>
-        <string name="insert_quarter_shading">Insert Quarter Shading</string>
+    <string name="insert_full_size_shading">Insert Full Size Shading</string>
+    <string name="insert_horizontal_shading">Insert Horizontal Shading</string>
+    <string name="insert_vertical_shading">Insert Vertical Shading</string>
+    <string name="insert_quarter_shading">Insert Quarter Shading</string>
     <string name="shade_zone">Shade Zone</string>
     <string name="unshade_zone">Unshade Zone</string>
     <string name="paint_zone_in_red">Paint Zone in Red</string>
@@ -50,7 +51,7 @@
     <string name="new_file">New</string>
     <string name="open">Open</string>
     <string name="open_recent">Open Recent</string>
-        <string name="clear_recent_files">Clear Recent Files</string>
+    <string name="clear_recent_files">Clear Recent Files</string>
     <string name="close">Close</string>
     <string name="save">Save</string>
     <string name="save_as">Save as...</string>
@@ -80,6 +81,16 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="default_file_name">unnamed</string>
+
+    <string name="document_title">Document Title</string>
+    <string name="author">Author</string>
+    <string name="subject">Subject</string>
+    <string name="keywords">Keywords</string>
+    <string name="line_height">Line Height</string>
+    <string name="page_format">Page Format</string>
+    <string name="show_page_numbers">Show page numbers</string>
+    <string name="respect_text_layout">Respect text layout</string>
+    <string name="encapsulate_pdf">Encapsulate PDF</string>
 
 
 </resources>

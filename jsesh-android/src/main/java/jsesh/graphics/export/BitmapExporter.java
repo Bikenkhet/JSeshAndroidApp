@@ -69,6 +69,7 @@ public class BitmapExporter {
      * @param parent the main window.
      */
     public BitmapExporter(Context context) {
+        //ANDROID VERSION
         this.context = context;
         outputFormatIndex = 0;
         setSingleOutputFile(new File("unnamed.png"));
@@ -190,6 +191,7 @@ public class BitmapExporter {
          * .File, java.awt.Dimension)
          */
         public Graphics2D buildGraphics() throws IOException {
+            //ANDROID VERSION
             //OutputStream out = new FileOutputStream(getSingleOutputFile());
             BitmapStreamGraphics g = new BitmapStreamGraphics(context, fileName,
                     scaledDimensions, OUTPUT_FORMATS[outputFormatIndex],

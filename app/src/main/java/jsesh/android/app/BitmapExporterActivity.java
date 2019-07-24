@@ -1,5 +1,6 @@
 package jsesh.android.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -20,16 +21,19 @@ public class BitmapExporterActivity extends AppCompatActivity {
     }
 
     public void saveBitmap(View view) {
-        if (StaticTransfer.obj instanceof ExportData) {
-            String filename = ((EditText) findViewById(R.id.editText5)).getText().toString();
-            int cadratHeight = Integer.parseInt(((EditText) findViewById(R.id.editText)).getText().toString());
-            boolean transparency = ((Switch)findViewById(R.id.switch1)).isChecked();
-            int fileOutputFormat = ((RadioGroup) findViewById(R.id.radioGroup)).getCheckedRadioButtonId() == R.id.radioButton ? 0 : 1;
-            BitmapExporter bitmapExporter = new BitmapExporter(this.getApplicationContext());
-            bitmapExporter.applySettings(filename, cadratHeight, transparency, fileOutputFormat, false);
-            bitmapExporter.export((ExportData) StaticTransfer.obj);
-            finish();
-        }
+        String filename = ((EditText) findViewById(R.id.editText5)).getText().toString();
+        int cadratHeight = Integer.parseInt(((EditText) findViewById(R.id.editText)).getText().toString());
+        boolean transparency = ((Switch)findViewById(R.id.switch1)).isChecked();
+        int fileOutputFormat = ((RadioGroup) findViewById(R.id.radioGroup)).getCheckedRadioButtonId() == R.id.radioButton ? 0 : 1;
+
+        Intent intent = new Intent();
+        intent.putExtra("filename", filename);
+        intent.putExtra("cadratHeight", cadratHeight);
+        intent.putExtra("transparency", transparency);
+        intent.putExtra("fileOutputFormat", fileOutputFormat);
+        setResult(RESULT_OK, intent);
+
+        finish();
     }
 
     @Override
