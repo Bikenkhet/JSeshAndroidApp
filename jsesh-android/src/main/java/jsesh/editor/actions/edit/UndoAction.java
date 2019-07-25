@@ -38,14 +38,15 @@ import java.awt.event.KeyEvent;
 
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.actionsUtils.EditorAction;
-import jsesh.swing.utils.KeyUtils;
+//import jsesh.swing.utils.KeyUtils;
 
 @SuppressWarnings("serial")
 public class UndoAction extends EditorAction {
 
 	public UndoAction(JMDCEditor editor) {
+		//ANDROID
 		super(editor,"undo");
-		putValue(ACCELERATOR_KEY, KeyUtils.buildCommandShortCut(KeyEvent.VK_Z));
+		//putValue(ACCELERATOR_KEY, KeyUtils.buildCommandShortCut(KeyEvent.VK_Z));
 	}
 	
 	public void actionPerformed(ActionEvent e) {

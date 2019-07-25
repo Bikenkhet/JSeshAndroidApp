@@ -37,14 +37,15 @@ import java.awt.event.ActionEvent;
 
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.actionsUtils.EditorAction;
-import jsesh.swing.utils.KeyUtils;
+//import jsesh.swing.utils.KeyUtils;
 
 @SuppressWarnings("serial")
 public class RedoAction extends EditorAction {
 
 	public RedoAction(JMDCEditor editor) {
+		//ANDROID
 		super(editor, "redo");
-		putValue(ACCELERATOR_KEY, KeyUtils.buildRedoShortCut());
+		//putValue(ACCELERATOR_KEY, KeyUtils.buildRedoShortCut());
 
 	}
 	
