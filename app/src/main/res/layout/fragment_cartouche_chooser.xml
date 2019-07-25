@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:layout_gravity="center">
+
+        <ImageView android:id="@+id/cartouche0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche0" />
+        <ImageView android:id="@+id/cartouche1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche1" />
+        <ImageView android:id="@+id/cartouche2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche2" />
+        <ImageView android:id="@+id/cartouche3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche3" />
+        <ImageView android:id="@+id/cartouche4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche4" />
+        <ImageView android:id="@+id/cartouche5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche5" />
+        <ImageView android:id="@+id/cartouche6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche6" />
+        <ImageView android:id="@+id/cartouche7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche7" />
+        <ImageView android:id="@+id/cartouche8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche8" />
+        <ImageView android:id="@+id/cartouche9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche9" />
+        <ImageView android:id="@+id/cartouche10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche10" />
+        <ImageView android:id="@+id/cartouche11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche11" />
+        <ImageView android:id="@+id/cartouche12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche12" />
+        <ImageView android:id="@+id/cartouche13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche13" />
+        <ImageView android:id="@+id/cartouche14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche14" />
+        <ImageView android:id="@+id/cartouche15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche15" />
+        <ImageView android:id="@+id/cartouche16" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche16" />
+        <ImageView android:id="@+id/cartouche17" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche17" />
+        <ImageView android:id="@+id/cartouche18" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche18" />
+        <ImageView android:id="@+id/cartouche19" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche19" />
+        <ImageView android:id="@+id/cartouche20" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche20" />
+        <ImageView android:id="@+id/cartouche21" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/cartouche21" />
+
+    </GridLayout>
+
+</FrameLayout>

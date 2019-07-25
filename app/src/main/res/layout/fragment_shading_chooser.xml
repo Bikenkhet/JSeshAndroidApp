@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="4"
+        android:layout_gravity="center">
+
+        <ImageView android:id="@+id/shading0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading0" />
+        <ImageView android:id="@+id/shading1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading1" />
+        <ImageView android:id="@+id/shading2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading2" />
+        <ImageView android:id="@+id/shading3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading3" />
+        <ImageView android:id="@+id/shading4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading4" />
+        <ImageView android:id="@+id/shading5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading5" />
+        <ImageView android:id="@+id/shading6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading6" />
+        <ImageView android:id="@+id/shading7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading7" />
+        <ImageView android:id="@+id/shading8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading8" />
+        <ImageView android:id="@+id/shading9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading9" />
+        <ImageView android:id="@+id/shading10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading10" />
+        <ImageView android:id="@+id/shading11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading11" />
+        <ImageView android:id="@+id/shading12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading12" />
+        <ImageView android:id="@+id/shading13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading13" />
+        <ImageView android:id="@+id/shading14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading14" />
+        <ImageView android:id="@+id/shading15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/shading15" />
+
+    </GridLayout>
+
+</FrameLayout>

@@ -323,10 +323,10 @@ public class EditActivity extends AppCompatActivity {
                 workflow.paintZoneInBlack();
                 return true;
             case R.id.shading:
-                //TODO
+                new ShadingChooserFragment().show(getSupportFragmentManager(), "shading chooser");
                 return true;
             case R.id.cartouches:
-                //TODO
+                new CartoucheChooserFragment().show(getSupportFragmentManager(), "cartouche chooser");
                 return true;
             case R.id.philological_markup:
                 //TODO
