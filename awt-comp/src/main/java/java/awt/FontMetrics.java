@@ -15,12 +15,13 @@ public class FontMetrics implements Serializable {
 
         paint = new Paint();
         paint.setTypeface(font.getTypeface());
-
+        paint.setTextSize(font.getSize2D());
 
     }
 
     public int getAscent() {
-        return (int)paint.getFontMetrics().ascent;
+        //FIXME Negative very dubious, but it makes line number position better
+        return -(int)paint.getFontMetrics().ascent;
     }
 
 }

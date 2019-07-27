@@ -77,7 +77,9 @@ public class Font implements Serializable {
 
         this.name = name;
 
-        this.typeface = Typeface.create(name, style);   //FIXME !!! INCORRECT STYLE
+        //FIXME TEMP
+        this.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL);   //FIXME !!! INCORRECT STYLE
+        //this.typeface = Typeface.create(name, style);   //FIXME !!! INCORRECT STYLE
 
         this.size = size;
 
