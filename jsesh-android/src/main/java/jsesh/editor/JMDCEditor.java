@@ -101,8 +101,6 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
 
         this.setBackgroundColor(Color.WHITE);
 
-        setInputType(InputType.TYPE_CLASS_TEXT & InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
         editorInit(mdcText);
 
         gestureDetector = new GestureDetectorCompat(this.getContext(), eventListener);
@@ -191,6 +189,17 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
     public void showKeyboard() {
         if (!isEditable()) return;
         InputMethodManager imm =(InputMethodManager) this.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        //This method ensures the correct keyboard is used, while ensuring key events are sent
+        //NOTE: this may not work for all keyboards as there is no standard that key events must be sent
+        //TODO A JSesh-specific solution should be found
+
+        //Show multi-line text keyboard
+        setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+        //Show the keyboard again, but with InputType.TYPE_NULL to enforce key events
+        //This will maintain the previous configuration
+        setInputType(InputType.TYPE_NULL);
         imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
     }
 

@@ -30,6 +30,7 @@ import jsesh.android.AndroidUtils;
 import jsesh.editor.HieroglyphicTextModel;
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.JMDCEditorWorkflow;
+import jsesh.editor.caret.MDCCaret;
 import jsesh.graphics.export.BitmapExporter;
 import jsesh.graphics.export.ExportData;
 import jsesh.graphics.export.pdfExport.PDFExporter;
@@ -38,7 +39,13 @@ import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
 import jsesh.mdc.file.MDCDocument;
 import jsesh.mdc.file.MDCDocumentReader;
+import jsesh.mdc.model.MDCMark;
+import jsesh.mdcDisplayer.drawingElements.HieroglyphicDrawerDispatcher;
+import jsesh.mdcDisplayer.preferences.DrawingPreferences;
+import jsesh.mdcDisplayer.preferences.DrawingSpecification;
 import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
+import jsesh.mdcDisplayer.preferences.PageLayout;
+import jsesh.mdcDisplayer.preferences.ShadingStyle;
 import jsesh.resources.ResourcesManager;
 
 
@@ -51,6 +58,7 @@ public class EditActivity extends AppCompatActivity {
     public static final int READ_REQUEST_CODE = 1;
     public static final int BITMAP_EXPORTER_REQUEST_CODE = 100;
     public static final int PDF_EXPORTER_REQUEST_CODE = 101;
+    public static final int DOCUMENT_PROPERTIES_REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -386,7 +394,18 @@ public class EditActivity extends AppCompatActivity {
                 //TODO
                 return true;
             case R.id.document_properties:
-                //TODO
+                Intent data =  new Intent(this, DocumentPropertiesActivity.class);
+                DrawingSpecification spec = editor.getDrawingSpecifications();
+                data.putExtra("a1SignHeight", spec.getStandardSignHeight());
+                data.putExtra("lineSpacing", spec.getLineSkip());
+                data.putExtra("spaceBetweenQuadrants", spec.getSmallSkip());
+                data.putExtra("columnSkip", spec.getColumnSkip());
+                data.putExtra("maximalQuadrantHeight", spec.getMaxCadratHeight());
+                data.putExtra("maximalQuadrantWidth", spec.getMaxCadratWidth());
+                data.putExtra("smallFontBody", spec.getSmallBodyScaleLimit());
+                data.putExtra("cartoucheLineWidth", spec.getCartoucheLineWidth());
+                data.putExtra("useLinesForShading", spec.getShadingStyle() == ShadingStyle.LINE_HATCHING);
+                startActivityForResult(data, DOCUMENT_PROPERTIES_REQUEST_CODE);
                 return true;
             case R.id.format:
                 //NO-OP
@@ -410,6 +429,7 @@ public class EditActivity extends AppCompatActivity {
             case R.id.center_small_signs:
                 item.setChecked(!item.isChecked());
                 editor.setSmallSignsCentered(item.isChecked());
+                updateFullModel(editor);
                 return true;
             case R.id.justify_text:
                 item.setChecked(!item.isChecked());
@@ -484,10 +504,52 @@ public class EditActivity extends AppCompatActivity {
 //                    bitmapExporter.export(new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1));
                     break;
 
+                case DOCUMENT_PROPERTIES_REQUEST_CODE:
+                    DrawingSpecification spec = editor.getDrawingSpecifications();
+
+                    //TODO Maybe check that all the values exist, rather than failing silently (though there is probably no reason why it would fail)
+                    spec.setStandardSignHeight(data.getFloatExtra("a1SignHeight", spec.getStandardSignHeight()));
+                    spec.setLineSkip(data.getFloatExtra("lineSpacing", spec.getLineSkip()));
+                    spec.setSmallSkip(data.getFloatExtra("spaceBetweenQuadrants", spec.getSmallSkip()));
+                    spec.setColumnSkip(data.getFloatExtra("columnSkip", spec.getColumnSkip()));
+                    spec.setMaxCadratHeight(data.getFloatExtra("maximalQuadrantHeight", spec.getMaxCadratHeight()));
+                    spec.setMaxCadratWidth(data.getFloatExtra("maximalQuadrantWidth", spec.getMaxCadratWidth()));
+                    spec.setSmallBodyScaleLimit(data.getFloatExtra("smallFontBody", (float)spec.getSmallBodyScaleLimit()));
+                    spec.setCartoucheLineWidth(data.getFloatExtra("cartoucheLineWidth", spec.getCartoucheLineWidth()));
+
+                    if (data.getBooleanExtra("useLinesForShading", spec.getShadingStyle() == ShadingStyle.LINE_HATCHING)) {
+                        spec.setShadingStyle(ShadingStyle.LINE_HATCHING);
+                    }
+                    else spec.setShadingStyle(ShadingStyle.GRAY_SHADING);
+
+                    updateFullModel(editor);
+                    break;
+
             }
 
         }
 
+    }
+
+    private void updateFullModel(JMDCEditor editor) {
+        //Hack to update the entire model
+        //Seems to work, though probably inefficient to rebuild the model
+        //TODO There must be a better way to do this
+        String code = editor.getWorkflow().getMDCCode();
+
+        MDCCaret caret = editor.getWorkflow().getCaret();
+        int insertIndex = caret.getInsertPosition().getIndex();
+        int markIndex = -1; //-1 if there is no mark
+        if (caret.hasMark()) markIndex = caret.getMarkPosition().getIndex();
+
+        try {
+            editor.getWorkflow().setMDCCode(code);
+            editor.getWorkflow().getCaret().moveInsertTo(insertIndex);
+            if (markIndex != -1) editor.getWorkflow().getCaret().setMarkAt(markIndex);
+        } catch (MDCSyntaxError mdcSyntaxError) {
+            //TODO Something went wrong? Though should be impossible
+            mdcSyntaxError.printStackTrace();
+        }
     }
 
     public byte[] getBytes(InputStream inputStream) throws IOException {

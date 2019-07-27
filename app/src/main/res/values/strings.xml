@@ -92,5 +92,16 @@
     <string name="respect_text_layout">Respect text layout</string>
     <string name="encapsulate_pdf">Encapsulate PDF</string>
 
+    <string name="a1_sign_height">\'A1\' Sign Height</string>
+    <string name="line_spacing">Line Spacing</string>
+    <string name="space_between_quadrants">Space between Quadrants</string>
+    <string name="column_skip">Column Skip</string>
+    <string name="maximal_quadrant_height">Maximal Quadrant Height</string>
+    <string name="maximal_quadrant_width">Maximal Quadrant Width</string>
+    <string name="small_font_body">Small Font Body</string>
+    <string name="cartouche_line_width">Cartouche Line Width</string>
+    <string name="use_lines_for_shading">Use Lines for Shading</string>
+    <string name="units">Units</string>
+
 
 </resources>

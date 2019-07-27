@@ -89,6 +89,9 @@
         <activity
             android:name=".OpenActivity"
             android:label="@string/open" />
+        <activity
+            android:name=".DocumentPropertiesActivity"
+            android:label="@string/document_properties" />
     </application>
 
 </manifest>
