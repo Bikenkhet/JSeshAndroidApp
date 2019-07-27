@@ -29,7 +29,6 @@ public class RecentFiles {
             String s;
             while ((s = bis.readLine()) != null) {
                 list.add(s);
-                System.out.println("READING:"+s+"   ");
             }
             bis.close();
         } catch (IOException e) {
@@ -46,9 +45,9 @@ public class RecentFiles {
             FileOutputStream fos = context.openFileOutput("recentFiles.txt", 0);
             BufferedWriter bos = new BufferedWriter(new OutputStreamWriter(fos));
             if (list != null) for (String s : list) {
+                System.out.println("FILE"+s);
                 bos.write(s);
                 bos.newLine();
-                System.out.println("WRITING:"+s+"   ");
             }
             bos.flush();
             bos.close();
@@ -61,7 +60,7 @@ public class RecentFiles {
     public static void update(Context context, String s) {
 
         ArrayList<String> list = read(context);
-        list.remove(s);
+        while (list.remove(s));
         list.add(0, s);
         if (list.size() > MAX_RECENT_FILES) list.remove(MAX_RECENT_FILES);
         write(context, list);
@@ -77,8 +76,7 @@ public class RecentFiles {
         Menu menu = openRecentMenuItem.getSubMenu();
         menu.clear();
         for (String s : read(context)) {
-            String[] split = s.split("/");
-            menu.add(R.id.recent_files_group, Menu.NONE, Menu.NONE, split[split.length-1]);
+            menu.add(R.id.recent_files_group, Menu.NONE, Menu.NONE, s);
         }
         menu.add(Menu.NONE, R.id.clear_recent_files, Menu.NONE, R.string.clear_recent_files);
 

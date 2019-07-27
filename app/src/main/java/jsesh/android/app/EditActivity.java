@@ -1,6 +1,5 @@
 package jsesh.android.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -33,18 +32,13 @@ import jsesh.editor.JMDCEditorWorkflow;
 import jsesh.editor.caret.MDCCaret;
 import jsesh.graphics.export.BitmapExporter;
 import jsesh.graphics.export.ExportData;
-import jsesh.graphics.export.pdfExport.PDFExporter;
 import jsesh.mdc.MDCSyntaxError;
 import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
 import jsesh.mdc.file.MDCDocument;
 import jsesh.mdc.file.MDCDocumentReader;
-import jsesh.mdc.model.MDCMark;
-import jsesh.mdcDisplayer.drawingElements.HieroglyphicDrawerDispatcher;
-import jsesh.mdcDisplayer.preferences.DrawingPreferences;
 import jsesh.mdcDisplayer.preferences.DrawingSpecification;
 import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
-import jsesh.mdcDisplayer.preferences.PageLayout;
 import jsesh.mdcDisplayer.preferences.ShadingStyle;
 import jsesh.resources.ResourcesManager;
 
@@ -352,7 +346,7 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(new Intent(this, OpenActivity.class));
                 return true;
             case R.id.open_recent:
-                //TODO
+                //NO-OP
                 return true;
             case R.id.clear_recent_files:
                 RecentFiles.clear(getApplicationContext());
@@ -372,8 +366,7 @@ public class EditActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    String[] splitFilename = mdcDocument.getFile().getAbsolutePath().split(" ");
-                    RecentFiles.update(getApplicationContext(), splitFilename[splitFilename.length - 1]);
+                    RecentFiles.update(getApplicationContext(), mdcDocument.getFile().getName());
                     return true;
                 }
             case R.id.save_as:
@@ -388,10 +381,11 @@ public class EditActivity extends AppCompatActivity {
                 //NO-OP
                 return true;
             case R.id.set_as_model:
-                //TODO
+                ModelPreferences.setAsModel(getApplicationContext(), editor.getDrawingSpecifications());
                 return true;
             case R.id.use_model_preferences:
-                //TODO
+                ModelPreferences.useModelPreferences(getApplicationContext(), editor.getDrawingSpecifications());
+                updateFullModel(editor);
                 return true;
             case R.id.document_properties:
                 Intent data =  new Intent(this, DocumentPropertiesActivity.class);
