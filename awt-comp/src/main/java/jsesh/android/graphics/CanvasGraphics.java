@@ -328,6 +328,7 @@ public class CanvasGraphics extends Graphics2D {
     @Override
     public void setFont(Font font) {
         this.font = font;
+        paint.setTypeface(font.getTypeface());
         paint.setTextSize(font.getSize2D());
     }
 

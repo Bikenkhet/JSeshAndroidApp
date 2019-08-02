@@ -1,13 +1,9 @@
 package java.awt;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.provider.FontRequest;
-
-import org.w3c.dom.Text;
 
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
@@ -15,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.AttributedCharacterIterator;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Font implements Serializable {
@@ -34,6 +28,8 @@ public class Font implements Serializable {
     private float size = 1.0f;
 
     private String name = "Default";
+
+    private String source;
 
     public Typeface getTypeface() {
         return typeface;
@@ -56,6 +52,7 @@ public class Font implements Serializable {
         Font font = new Font();
         font.typeface = Typeface.createFromAsset(mgr, path);
         if (font.typeface == null) throw new IOException();
+        font.source = path;
         return font;
     }
 
@@ -78,7 +75,26 @@ public class Font implements Serializable {
         this.name = name;
 
         //FIXME TEMP
-        this.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL);   //FIXME !!! INCORRECT STYLE
+        //FIXME Not great beyond specific circumstances
+
+        //TODO Needs extending
+        Typeface family = Typeface.DEFAULT;
+        if (name != null) {
+            String fam = name.toLowerCase();
+            if (fam.equals("serif")) family = Typeface.SERIF;
+        }
+
+        //TODO Needs extending
+        int typefaceStyle = Typeface.NORMAL;
+        if (style == ITALIC) typefaceStyle = Typeface.ITALIC;
+        else if (style == BOLD) typefaceStyle = Typeface.BOLD;
+        else if (style == (BOLD | ITALIC)) typefaceStyle = Typeface.BOLD_ITALIC;
+
+
+        this.typeface = Typeface.create(family, typefaceStyle);
+
+        //this.typeface = Typeface.create(name, Typeface.NORMAL);
+        //this.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL);   //FIXME !!! INCORRECT STYLE
         //this.typeface = Typeface.create(name, style);   //FIXME !!! INCORRECT STYLE
 
         this.size = size;
@@ -97,11 +113,12 @@ public class Font implements Serializable {
 
     public Font deriveFont(Map<? extends AttributedCharacterIterator.Attribute, ?> attributes) {
         //FIXME This should probably do something
-        return new Font(Typeface.create(this.typeface, this.typeface.getStyle()));
+        Font font = this.copy();
+        return font;
     }
 
     public Font deriveFont(float size) {
-        Font font = new Font(Typeface.create(this.typeface, this.typeface.getStyle()));
+        Font font = this.copy();
         font.size = size;
         return font;
     }
@@ -117,4 +134,13 @@ public class Font implements Serializable {
     public String getName() {
         return name;
     }
+
+    public Font copy() {
+        Font font = new Font(Typeface.create(this.typeface, this.typeface.getStyle()));
+        font.size = size;
+        font.name = name;
+        font.source = source;
+        return font;
+    }
+
 }
