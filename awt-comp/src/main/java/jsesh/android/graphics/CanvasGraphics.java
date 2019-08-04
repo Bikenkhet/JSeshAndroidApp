@@ -146,10 +146,10 @@ public class CanvasGraphics extends Graphics2D {
         paint.setStyle(Paint.Style.FILL);
         //Use stroke width 0 for drawing text, it seems Graphics2D doesn't use it for text, but
         //canvas does?
-        if (paint.getStrokeWidth() != 0) paint.setStrokeWidth(0);
         float tempStrokeWidth = paint.getStrokeWidth();
+        paint.setStrokeWidth(0);
         canvas.drawText(str, x, y, paint);
-        if (tempStrokeWidth != 0) paint.setStrokeWidth(tempStrokeWidth);
+        paint.setStrokeWidth(tempStrokeWidth);
     }
 
     @Override

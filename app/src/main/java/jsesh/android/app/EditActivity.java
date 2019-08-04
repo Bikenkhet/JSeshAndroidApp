@@ -331,7 +331,7 @@ public class EditActivity extends AppCompatActivity {
                 new CartoucheChooserFragment().show(getSupportFragmentManager(), "cartouche chooser");
                 return true;
             case R.id.philological_markup:
-                //TODO
+                new PhilologicalChooserFragment().show(getSupportFragmentManager(), "philological chooser");
                 return true;
 
             //File

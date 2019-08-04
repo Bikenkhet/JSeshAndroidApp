@@ -34,7 +34,13 @@ public abstract class AbstractSymbolDrawer implements SymbolDrawerDelegate {
 			CombinedPath combinedPath= buildShapeForDrawing(viewBox.getWidth(),
 					viewBox.getHeight() );
 			GeneralPath pol = combinedPath.getActualPath();
-			g2d.fill(g2d.getStroke().createStrokedShape(pol));
+			//ANDROID MODIFIED Quick fix for lack of proper BasicStroke.createStrokeShape implementation
+			// Ideally this should be implemented in the interest of preserving the original code,
+			// though the original has no apparent reason to use fill in the first place, given the
+			// subsequent use of draw below (assuming no other changes are made prior to draw below,
+			// which has not been checked). Alternatively, we could draw a shape instead if it is not
+			// closed, but this is likely to have negative consequences.
+			g2d.draw(pol);//g2d.fill(g2d.getStroke().createStrokedShape(pol));
 		} else {
 	
 			// Now, the problem is that we need to compute the correct

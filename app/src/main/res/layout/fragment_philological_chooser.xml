@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayoutPhilological"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:columnCount="4"
+        android:layout_gravity="center">
+
+        <ImageView android:id="@+id/philological0" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological0" />
+        <ImageView android:id="@+id/philological1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological1" />
+        <ImageView android:id="@+id/philological2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological2" />
+        <ImageView android:id="@+id/philological3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological3" />
+        <ImageView android:id="@+id/philological4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological4" />
+        <ImageView android:id="@+id/philological5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological5" />
+        <ImageView android:id="@+id/philological6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological6" />
+        <ImageView android:id="@+id/philological7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological7" />
+        <ImageView android:id="@+id/philological8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological8" />
+        <ImageView android:id="@+id/philological9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological9" />
+        <ImageView android:id="@+id/philological10" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological10" />
+        <ImageView android:id="@+id/philological11" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological11" />
+        <ImageView android:id="@+id/philological12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological12" />
+        <ImageView android:id="@+id/philological13" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological13" />
+        <ImageView android:id="@+id/philological14" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological14" />
+        <ImageView android:id="@+id/philological15" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological15" />
+        <ImageView android:id="@+id/philological16" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological16" />
+        <ImageView android:id="@+id/philological17" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological17" />
+        <ImageView android:id="@+id/philological18" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological18" />
+        <ImageView android:id="@+id/philological19" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological19" />
+        <ImageView android:id="@+id/philological20" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological20" />
+        <ImageView android:id="@+id/philological21" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological21" />
+        <ImageView android:id="@+id/philological22" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological22" />
+        <ImageView android:id="@+id/philological23" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological23" />
+        <ImageView android:id="@+id/philological24" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological24" />
+        <ImageView android:id="@+id/philological25" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/philological25" />
+
+    </android.support.v7.widget.GridLayout>
+
+</FrameLayout>
