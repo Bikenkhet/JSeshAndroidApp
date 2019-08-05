@@ -295,6 +295,16 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
 
     }
 
+    @Override
+    public boolean onKeyMultiple(int keyCode, int repeatCount, KeyEvent event) {
+
+        //TODO Multiple characters with repeat count?
+        //Handles characters without key codes
+        for (char c : event.getCharacters().toCharArray()) getWorkflow().keyTyped(c);
+
+        return true;
+    }
+
 
 
 
