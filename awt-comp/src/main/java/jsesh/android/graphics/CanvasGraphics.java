@@ -34,9 +34,6 @@ import java.util.Map;
 
 public class CanvasGraphics extends Graphics2D {
 
-    //TEMP
-    private int nest;
-
     private Canvas canvas;
     private Paint paint;
     private Paint backgroundPaint;
@@ -56,13 +53,14 @@ public class CanvasGraphics extends Graphics2D {
 
     private Font font;
 
+    boolean isDisposed = false;
+    boolean isRoot = true;
+
     public static CanvasGraphics create(Canvas canvas) {
 
         //System.out.println("Creating graphics");
 
         CanvasGraphics canvasGraphics = new CanvasGraphics(canvas);
-
-        canvasGraphics.nest = canvas.getSaveCount();
 
         return canvasGraphics;
 
@@ -189,15 +187,14 @@ public class CanvasGraphics extends Graphics2D {
 
     @Override
     public void dispose() {
-        //Check if it is already disposed; this is needed because some graphics seem to be disposed more than once
-        if (canvas != null) {
-            for (int i=0;i<nest-canvas.getSaveCount();i++) canvas.save();
-            //System.out.println("RESTORING:"+canvas.getSaveCount()+"|"+nest);
-            if (nest > 2) canvas.restore();
 
-            //FOR GC purposes, hopefully
-            canvas = null;
-        }
+        if (isDisposed) return;
+        isDisposed = true;
+
+        //TODO Anything else need disposing?
+
+        if (!isRoot) canvas.restore();
+
     }
 
     @Override
@@ -264,8 +261,6 @@ public class CanvasGraphics extends Graphics2D {
 
         CanvasGraphics canvasGraphics = new CanvasGraphics(canvas);
 
-        canvasGraphics.nest = nest + 1;
-
         canvasGraphics.paint = new Paint(this.paint);
         canvasGraphics.backgroundPaint = new Paint(this.backgroundPaint);
 
@@ -279,11 +274,9 @@ public class CanvasGraphics extends Graphics2D {
 
         canvasGraphics.font = new Font(this.paint.getTypeface());
 
-        //TODO Is this ok for copying? Won't work if original is used before dispose
-        //TODO Seems alright with fix in dispose
-        canvas.save();
-        //System.out.println("SAVING:"+canvas.getSaveCount() + "|"+canvasGraphics.nest);
+        canvasGraphics.isRoot = false;
 
+        canvas.save();
 
         return canvasGraphics;
 
