@@ -238,6 +238,9 @@ public class EditActivity extends AppCompatActivity {
             case R.id.edit_line_numbers:
                 workflow.setMode('|');
                 return true;
+            case R.id.zoom:
+                new ZoomFragment().show(getSupportFragmentManager(), "zoom");
+                return true;
 
             //Group manipulation
             case R.id.group_horizontally:

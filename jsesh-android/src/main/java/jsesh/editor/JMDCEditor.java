@@ -407,7 +407,7 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
         setFocusable(true);
         viewUpdater = new MDCViewUpdater(this);
 
-        setScale(10.0);
+        setScale(8.0);
 
         eventListener = new MDCEditorEventsListener(this);
         new MDCEditorKeyManager(this);

@@ -73,6 +73,7 @@
             <item android:id="@+id/edit_bold_text" android:title="@string/edit_bold_text"/>
             <item android:id="@+id/edit_transliteration_text" android:title="@string/edit_transliteration_text"/>
             <item android:id="@+id/edit_line_numbers" android:title="@string/edit_line_numbers"/>
+            <item android:id="@+id/zoom" android:title="@string/zoom"/>
         </menu>
     </item>
 
