@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import jsesh.resources.ResourcesManager;
+
 /**
  * A class representing the manuel de codage and providing information about some of the standard
  * codes.
@@ -548,8 +550,10 @@ public class ManuelDeCodage {
 		basicGardinerCodeMap = new HashMap<String, List<String>>();
 		try {
 			// Read and build the map if necessary
-			Reader in = new InputStreamReader(HieroglyphsManager.class
-					.getResourceAsStream("basicGardinerCodes.txt"), "UTF-8");
+            //ANDROID MODIFIED
+            Reader in = new InputStreamReader(ResourcesManager.openAssetInPackage("basicGardinerCodes.txt"), "UTF-8");
+//			Reader in = new InputStreamReader(HieroglyphsManager.class
+//					.getResourceAsStream("basicGardinerCodes.txt"), "UTF-8");
 			StreamTokenizer tok = new StreamTokenizer(in);
 			// Read and store the codes according to their families.
 			while (tok.nextToken() != StreamTokenizer.TT_EOF) {

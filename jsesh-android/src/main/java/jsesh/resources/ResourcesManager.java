@@ -231,4 +231,11 @@ public class ResourcesManager {
         return context.getAssets().open(filename);
     }
 
+    public static InputStream openAssetInPackage(String filename) throws IOException {
+        String callerClassName = (new Exception()).getStackTrace()[1].getClassName();
+        String packageName = callerClassName.substring(0, callerClassName.lastIndexOf('.'));
+        String filePath = packageName.replace('.', '/') + "/" + filename;
+        return openAsset(filePath);
+    }
+
 }

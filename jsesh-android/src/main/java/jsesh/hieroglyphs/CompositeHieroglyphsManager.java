@@ -85,8 +85,11 @@ public class CompositeHieroglyphsManager implements HieroglyphDatabaseInterface 
                         distributionInfoManager));
 
         // Read "standard" signs description
-        InputStream in1 = this.getClass().getResourceAsStream(
-                "signs_description.xml");
+        //ANDROID MODIFIED
+        InputStream in1 = ResourcesManager.openAssetInPackage("signs_description.xml");
+//        InputStream in1 = this.getClass().getResourceAsStream(
+//                "signs_description.xml");
+        //END ANDROID
         if (in1 != null) {
             reader.readSignDescription(in1);
         } else {

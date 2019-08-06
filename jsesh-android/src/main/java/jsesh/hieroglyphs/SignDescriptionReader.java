@@ -160,9 +160,9 @@ public class SignDescriptionReader {
         try {
 
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-            saxParserFactory.setValidating(true);
+            saxParserFactory.setValidating(false);//ANDROID MODIFIED to false
 
-            saxParserFactory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);
+            //saxParserFactory.setFeature("http://xml.org/sax/features/namespace-prefixes", true);//ANDROID MODIFIED COMMENTED
             saxParserFactory.setFeature("http://xml.org/sax/features/namespaces", true);
             saxParserFactory.setNamespaceAware(true);
 
