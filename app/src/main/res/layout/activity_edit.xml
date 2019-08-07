@@ -15,23 +15,26 @@
         android:elevation="4dp"
         android:theme="@style/AppToolbar"
         android:focusableInTouchMode="true"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/edit_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/edit_toolbar"
+        app:layout_constraintStart_toStartOf="parent">
 
         <HorizontalScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true">
 
             <jsesh.editor.JMDCEditor
                 android:id="@+id/main_jmdceditor"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 jsesh:mdcText="G6"/>
 
         </HorizontalScrollView>

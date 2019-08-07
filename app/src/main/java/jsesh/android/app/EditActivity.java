@@ -484,7 +484,7 @@ public class EditActivity extends AppCompatActivity {
                     bitmapExporter.applySettings(
                             data.getStringExtra("filename"),
                             data.getIntExtra("cadratHeight", 0),
-                            data.getBooleanExtra("cadratHeight", false),
+                            data.getBooleanExtra("transparency", false),
                             data.getIntExtra("fileOutputFormat", 0),
                             false);
                     bitmapExporter.export(new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1));

@@ -158,10 +158,19 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
 
         Dimension d = getPreferredSize();
 
-        if (widthMode == MeasureSpec.UNSPECIFIED) d.width = Math.max(d.width, widthSize);
-        if (heightMode == MeasureSpec.UNSPECIFIED) d.height = Math.max(d.height, heightSize);
+        //Default for match_parent or given value (MeasureSpec.EXACT)
+        int width = widthSize;
+        int height = heightSize;
 
-        setMeasuredDimension(d.width, d.height);
+        //wrap_content
+        if(widthMode == MeasureSpec.AT_MOST) width = d.width;
+        if(heightMode == MeasureSpec.AT_MOST) height = d.height;
+
+        //unspecified, set to largest value
+        if (widthMode == MeasureSpec.UNSPECIFIED) width = Math.max(d.width, widthSize);
+        if (heightMode == MeasureSpec.UNSPECIFIED) height = Math.max(d.height, heightSize);
+
+        setMeasuredDimension(width, height);
     }
 
     @Override
