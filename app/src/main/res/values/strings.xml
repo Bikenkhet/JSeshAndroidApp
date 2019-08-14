@@ -103,6 +103,52 @@
     <string name="use_lines_for_shading">Use Lines for Shading</string>
     <string name="units">Units</string>
     <string name="zoom">Zoom</string>
+    <string name="palette">Palette</string>
+    <string name="family">Family</string>
+    <string name="sub_family">Sub-Family</string>
+    <string name="sub_sub_family">Sub-Sub-Family</string>
+    <string name="show_all">Show All</string>
+    <string name="search">Search</string>
+    <string name="done">Done</string>
+    <string name="user_palette">User Palette</string>
+    <string name="values">Values</string>
+
+    <string name="family_latest_signs">Latest signs</string>
+    <string name="family_user_palette">Favourite signs</string>
+    <string name="family_all">All signs</string>
+    <string name="family_tall_narrow">Tall narrow signs</string>
+    <string name="family_low_broad">Low broad signs</string>
+    <string name="family_low_narrow">Low narrow signs</string>
+
+    <string name="family_a">Man and his occupations</string>
+    <string name="family_b">Woman and her occupations</string>
+    <string name="family_c">Anthropomorphic Deities</string>
+    <string name="family_d">Parts of the human body</string>
+    <string name="family_e">Mammals</string>
+    <string name="family_f">Parts of Mammals</string>
+    <string name="family_g">Birds</string>
+    <string name="family_h">Parts of Birds</string>
+    <string name="family_i">Amphibious animals, reptiles, etc.</string>
+    <string name="family_k">Fishes and parts of fishes</string>
+    <string name="family_l">Invertebrata and lesser animals"</string>
+    <string name="family_m">Trees and plants</string>
+    <string name="family_n">Sky, earth, water</string>
+    <string name="family_o">Buildings, parts of buildings, etc.</string>
+    <string name="family_p">Ships and parts of ships</string>
+    <string name="family_q">Domestic and funerary furniture</string>
+    <string name="family_r">Temple furniture and sacred emblems</string>
+    <string name="family_s">Crowns, Dress, Staves, etc.</string>
+    <string name="family_t">Warfare, hunting, butchery</string>
+    <string name="family_u">Agriculture, crafts, and professions</string>
+    <string name="family_v">Rope, Fibre, baskets, bags, etc.</string>
+    <string name="family_w">Vessels of stone and earthenware</string>
+    <string name="family_x">Loaves and cakes</string>
+    <string name="family_y">Writings, games, music</string>
+    <string name="family_z">Strokes</string>
+    <string name="family_aa">Unclassified (J)</string>
+    <string name="family_nu">Upper Egypt Nomes</string>
+    <string name="family_nl">Lower Egypt Nomes</string>
+    <string name="family_ff">Hieratic signs, Gardiner, JEA 15 (&amp;)</string>
 
 
 </resources>

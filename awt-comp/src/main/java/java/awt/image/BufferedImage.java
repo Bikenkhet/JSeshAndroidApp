@@ -35,7 +35,7 @@ public class BufferedImage extends Image {
     }
 
     public Graphics2D createGraphics() {
-        //TODO IMPORTANT Do this properly
+        CanvasGraphics graphics = new CanvasGraphics(canvas);
         return graphics;
     }
 
@@ -51,5 +51,8 @@ public class BufferedImage extends Image {
         throw new RuntimeException("NOT IMPLEMENTED");
     }
 
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
 
 }

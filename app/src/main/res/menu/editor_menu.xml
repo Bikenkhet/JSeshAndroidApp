@@ -109,6 +109,7 @@
         </menu>
     </item>
 
+    <item android:id="@+id/palette" android:title="@string/palette"/>
 
 
 

@@ -444,6 +444,11 @@ public class EditActivity extends AppCompatActivity {
                 startActivityForResult(intent2, PDF_EXPORTER_REQUEST_CODE);
                 return true;
 
+                //Palette
+            case R.id.palette:
+                new PaletteFragment().show(getSupportFragmentManager(), "palette");
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
