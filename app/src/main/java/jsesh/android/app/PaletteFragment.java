@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -261,7 +264,25 @@ public class PaletteFragment extends DialogFragment {
             }
         });
 
-        initialised = true;
+        final GestureDetectorCompat gestureDetector = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public void onLongPress(MotionEvent e) {
+                SignInfoFragment.newInstance(selectedCode).show(getActivity().getSupportFragmentManager(), "sign info");
+            }
+        });
+        gestureDetector.setIsLongpressEnabled(true);
+
+        getDialog().findViewById(R.id.imageView).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
+
+
+
+
+
 
         ((CheckBox)getDialog().findViewById(R.id.checkBox2)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -290,6 +311,10 @@ public class PaletteFragment extends DialogFragment {
                 createIconsAsync(new ArrayList<>(hieroglyphsManager.getSignsContaining(selectedCode)));
             }
         });
+
+        //Finish init
+
+        initialised = true;
 
     }
 

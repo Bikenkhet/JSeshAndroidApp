@@ -101,8 +101,10 @@
     <string name="small_font_body">Small Font Body</string>
     <string name="cartouche_line_width">Cartouche Line Width</string>
     <string name="use_lines_for_shading">Use Lines for Shading</string>
+
     <string name="units">Units</string>
     <string name="zoom">Zoom</string>
+
     <string name="palette">Palette</string>
     <string name="family">Family</string>
     <string name="sub_family">Sub-Family</string>
@@ -150,5 +152,8 @@
     <string name="family_nl">Lower Egypt Nomes</string>
     <string name="family_ff">Hieratic signs, Gardiner, JEA 15 (&amp;)</string>
 
+    <string name="sign_description">Sign Description</string>
+    <string name="sign_info">Sign Info</string>
+    <string name="glyph_info">Glyph Info</string>
 
 </resources>
