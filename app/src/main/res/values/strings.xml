@@ -155,5 +155,6 @@
     <string name="sign_description">Sign Description</string>
     <string name="sign_info">Sign Info</string>
     <string name="glyph_info">Glyph Info</string>
+    <string name="invalid_mdc_format">Invalid MDC format</string>
 
 </resources>

@@ -3,13 +3,13 @@ package jsesh.android.app;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -29,6 +30,7 @@ import jsesh.android.AndroidUtils;
 import jsesh.editor.HieroglyphicTextModel;
 import jsesh.editor.JMDCEditor;
 import jsesh.editor.JMDCEditorWorkflow;
+import jsesh.editor.MDCModelEditionAdapter;
 import jsesh.editor.caret.MDCCaret;
 import jsesh.graphics.export.BitmapExporter;
 import jsesh.graphics.export.ExportData;
@@ -37,6 +39,7 @@ import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
 import jsesh.mdc.file.MDCDocument;
 import jsesh.mdc.file.MDCDocumentReader;
+import jsesh.mdc.model.operations.ModelOperation;
 import jsesh.mdcDisplayer.preferences.DrawingSpecification;
 import jsesh.mdcDisplayer.preferences.DrawingSpecificationsImplementation;
 import jsesh.mdcDisplayer.preferences.ShadingStyle;
@@ -76,7 +79,9 @@ public class EditActivity extends AppCompatActivity {
 
         toolbar.setVisibility(View.GONE);
 
-        findViewById(R.id.main_jmdceditor).setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        final JMDCEditor editor = findViewById(R.id.main_jmdceditor);
+
+        editor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) setEditMode(true);
@@ -84,6 +89,74 @@ public class EditActivity extends AppCompatActivity {
         });
 
         mdcDocument = new MDCDocument();
+
+
+        //Code and separator
+
+        final EditText editTextCurrentCode = findViewById(R.id.editTextCurrentCode);
+        final EditText editTextCurrentSeparator = findViewById(R.id.editTextCurrentSeparator);
+        final EditText editTextCurrentMDC = findViewById(R.id.editTextCurrentMDC);
+
+        editTextCurrentCode.setEnabled(false);
+        editTextCurrentSeparator.setEnabled(false);
+
+        editTextCurrentCode.setInputType(InputType.TYPE_NULL);
+        editTextCurrentSeparator.setInputType(InputType.TYPE_NULL);
+
+        editTextCurrentMDC.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    boolean success = editor.getWorkflow().setCurrentLineTo(editTextCurrentMDC.getText().toString());
+                    if (!success) Toast.makeText(getApplicationContext(), R.string.invalid_mdc_format, Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        editor.addCodeChangeListener(new MDCModelEditionAdapter() {
+            @Override
+            public void textEdited(ModelOperation op) {
+                editTextCurrentMDC.setText(editor.getWorkflow().getCurrentLineAsString());
+                editTextCurrentMDC.setSelection(editTextCurrentMDC.getText().length());
+            }
+
+            @Override
+            public void textChanged() {
+                editTextCurrentMDC.setText(editor.getWorkflow().getCurrentLineAsString());
+                editTextCurrentMDC.setSelection(editTextCurrentMDC.getText().length());
+            }
+
+            @Override
+            public void separatorChanged() {
+                String sep = Character.toString(editor.getWorkflow().getCurrentSeparator());
+                editTextCurrentSeparator.setText(sep);
+            }
+
+            @Override
+            public void codeChanged(StringBuffer code) {
+                editTextCurrentCode.setText(editor.getWorkflow().getCurrentCode());
+                editTextCurrentCode.setSelection(editTextCurrentCode.getText().length());
+            }
+
+            @Override
+            public void focusGained(StringBuffer code) {
+                //NO-OP
+            }
+
+            @Override
+            public void focusLost() {
+                //NO-OP
+            }
+
+            @Override
+            public void caretChanged(MDCCaret caret) {
+                editTextCurrentMDC.setText(editor.getWorkflow().getCurrentLineAsString());
+                editTextCurrentMDC.setSelection(editTextCurrentMDC.getText().length());
+            }
+        });
+
 
         //Handle intent
 
@@ -100,7 +173,6 @@ public class EditActivity extends AppCompatActivity {
                     mdcDocument = reader.readStream(is, new File(".gly"));
                     mdcDocument.setFile(null);
 
-                    JMDCEditor editor = findViewById(R.id.main_jmdceditor);
                     editor.setHieroglyphiTextModel(mdcDocument.getHieroglyphicTextModel());
                     editor.getDrawingSpecifications().applyDocumentPreferences(mdcDocument.getDocumentPreferences());
 
@@ -141,13 +213,13 @@ public class EditActivity extends AppCompatActivity {
             toolbar.setVisibility(View.VISIBLE);
             AndroidUtils.hideKeyboard(this);
 
-            TypedValue tv = new TypedValue();
+            /*TypedValue tv = new TypedValue();
             if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
                 View editor = findViewById(R.id.main_jmdceditor);
                 FrameLayout.LayoutParams layoutParams = ((FrameLayout.LayoutParams) editor.getLayoutParams());
                 layoutParams.topMargin = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
                 editor.setLayoutParams(layoutParams);
-            }
+            }*/
             toolbar.requestFocus();
         }
         else if (editMode && !inEditMode) {
@@ -156,10 +228,10 @@ public class EditActivity extends AppCompatActivity {
             toolbar.setVisibility(View.GONE);
             AndroidUtils.hideKeyboard(this);
 
-            View editor = findViewById(R.id.main_jmdceditor);
+            /*View editor = findViewById(R.id.main_jmdceditor);
             FrameLayout.LayoutParams layoutParams = ((FrameLayout.LayoutParams) editor.getLayoutParams());
             layoutParams.topMargin = 0;
-            editor.setLayoutParams(layoutParams);
+            editor.setLayoutParams(layoutParams);*/
         }
 
     }

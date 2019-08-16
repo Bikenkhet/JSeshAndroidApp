@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:jsesh="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".EditActivity">
 
     <android.support.v7.widget.Toolbar
@@ -15,16 +16,13 @@
         android:elevation="4dp"
         android:theme="@style/AppToolbar"
         android:focusableInTouchMode="true"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/edit_toolbar"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_weight="1">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -41,4 +39,35 @@
 
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editTextCurrentCode"
+            android:layout_width="55sp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="none"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/editTextCurrentSeparator"
+            android:layout_width="20sp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="none"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/editTextCurrentMDC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_weight="1"
+            android:inputType="textVisiblePassword|textNoSuggestions|text"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
