@@ -272,13 +272,13 @@ public class EditActivity extends AppCompatActivity {
                 workflow.redo();
                 return true;
             case R.id.cut:
-                //TODO
+                editor.cut();
                 return true;
             case R.id.copy:
-                //TODO
+                editor.copy();
                 return true;
             case R.id.paste:
-                //TODO
+                editor.paste();
                 return true;
             case R.id.duplicate:
                 //TODO

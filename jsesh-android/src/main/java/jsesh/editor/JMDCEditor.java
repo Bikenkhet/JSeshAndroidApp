@@ -1,5 +1,8 @@
 package jsesh.editor;
 
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -34,13 +37,16 @@ import java.util.logging.Logger;
 import javax.swing.ActionMap;
 
 import jsesh.android.AndroidUtils;
+import jsesh.android.JSeshMimeTypes;
 import jsesh.android.R;
 import jsesh.android.graphics.CanvasGraphics;
 import jsesh.editor.caret.MDCCaret;
 import jsesh.mdc.MDCSyntaxError;
 import jsesh.mdc.constants.TextDirection;
 import jsesh.mdc.constants.TextOrientation;
+import jsesh.mdc.model.AlphabeticText;
 import jsesh.mdc.model.MDCPosition;
+import jsesh.mdc.model.TopItemList;
 import jsesh.mdc.model.operations.ModelOperation;
 import jsesh.mdcDisplayer.draw.ViewDrawer;
 import jsesh.mdcDisplayer.layout.MDCEditorKit;
@@ -882,29 +888,32 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
      */
     public void paste() {
 
-//        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-//
-//        try {
-//            Transferable t = clipboard.getContents(this);
-//            if (t != null) {
-//                if (t.isDataFlavorSupported(JSeshPasteFlavors.ListOfTopItemsFlavor)) {
-//                    ListOfTopItems l = (ListOfTopItems) t
-//                            .getTransferData(JSeshPasteFlavors.ListOfTopItemsFlavor);
-//                    workflow.insertElements(l);
-//                } else if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-//                    String string = (String) t
-//                            .getTransferData(DataFlavor.stringFlavor);
-//                    workflow.insertElement(new AlphabeticText('l', string));
-//                }
-//            }
-//        } catch (IllegalStateException exception) {
-//            exception.printStackTrace();
-//        } catch (UnsupportedFlavorException exception) {
-//            exception.printStackTrace();
-//        } catch (IOException exception) {
-//            exception.printStackTrace();
-//        }
+        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
 
+        if (clipboard != null && clipboard.hasPrimaryClip()) {
+
+            ClipData clip = clipboard.getPrimaryClip();
+            if (clip != null) {
+                ClipDescription description = clip.getDescription();
+
+                for (int i = 0; i < clip.getItemCount(); i++) {
+
+                    ClipData.Item item = clip.getItemAt(i);
+                    if (description.hasMimeType(JSeshMimeTypes.MIME_TYPE_MDC)) {
+                        //Paste MDC
+                        String text = item.coerceToText(getContext()).toString();
+                        workflow.insertMDC(text);
+                    }
+                    else if (description.hasMimeType(JSeshMimeTypes.MIME_TYPE_PLAIN_TEXT)) {
+                        //Paste text
+                        String text = item.coerceToText(getContext()).toString();
+                        workflow.insertElement(new AlphabeticText('l', text));
+                    }
+
+                }
+            }
+
+        }
 
     }
 
@@ -913,21 +922,22 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
      */
     public void copy() {
 
-//        TopItemList top = getWorkflow().getSelectionAsTopItemList();
-//        MDCModelTransferable transferable = mdcModelTransferableBroker
-//                .buildTransferable(top);
-//        Toolkit.getDefaultToolkit().getSystemClipboard()
-//                .setContents(transferable, null);
-    }
+        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
 
-//    public void copy(DataFlavor[] dataFlavors) {
-//        TopItemList top = getWorkflow().getSelectionAsTopItemList();
-//        MDCModelTransferable transferable = mdcModelTransferableBroker
-//                .buildTransferable(top, dataFlavors);
-//        Toolkit.getDefaultToolkit().getSystemClipboard()
-//                .setContents(transferable, null);
-//
-//    }
+        if (clipboard != null) {
+            TopItemList top = getWorkflow().getSelectionAsTopItemList();
+            String mdc = top.toMdC();
+            ClipData.Item item = new ClipData.Item(mdc);
+
+            ClipData clip = new ClipData("mdc", new String[] {
+                    JSeshMimeTypes.MIME_TYPE_MDC,
+                    JSeshMimeTypes.MIME_TYPE_PLAIN_TEXT
+            }, item);
+
+            clipboard.setPrimaryClip(clip);
+        }
+
+    }
 
     /**
      * Cut the selected area.
@@ -945,7 +955,7 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
 //     */
 //    public void setMdcModelTransferableBroker(
 //            MDCModelTransferableBroker mdcModelTransferableBroker) {
-//        this.mdcModelTransferableBroker = mdcModelTransferableBroker;
+////        this.mdcModelTransferableBroker = mdcModelTransferableBroker;
 //    }
 
     public void clearText() {
