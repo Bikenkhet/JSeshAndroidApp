@@ -1,5 +1,6 @@
 package jsesh.android.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,11 +32,9 @@ public class OpenActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 String filename = (String) parent.getItemAtPosition(position);
-                if (StaticTransfer.obj instanceof EditActivity) {
-                    EditActivity edit = ((EditActivity) StaticTransfer.obj);
-                    FileOpener.openFile(edit, filename);
-
-                };
+                Intent intent = new Intent();
+                intent.putExtra("filename", filename);
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
@@ -60,9 +59,4 @@ public class OpenActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        StaticTransfer.obj = null;
-        super.onDestroy();
-    }
 }

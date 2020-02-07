@@ -29,7 +29,8 @@ public class DocumentSaverDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialog, int id) {
                 String filename = ((EditText)alertView.findViewById(R.id.editTextSaveFile)).getText().toString();
                 if (filename.length() == 0) filename = getString(R.string.default_file_name);
-                MDCDocument mdcDocument = (MDCDocument) StaticTransfer.obj;
+                EditActivity editActivity = (EditActivity) getActivity();
+                MDCDocument mdcDocument = editActivity.mdcDocument;
                 mdcDocument.setFile(new File(getContext().getExternalFilesDir(null), filename + ".gly"));
                 try {
                     mdcDocument.save();
@@ -48,9 +49,4 @@ public class DocumentSaverDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    @Override
-    public void onDestroy() {
-        StaticTransfer.obj = null;
-        super.onDestroy();
-    }
 }

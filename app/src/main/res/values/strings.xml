@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JSesh Android App</string>
+    <string name="app_name">JSesh</string>
 
     <string name="export_bitmap">Export Bitmap</string>
     <string name="export_pdf">Export PDF</string>

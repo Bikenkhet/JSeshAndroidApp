@@ -36,10 +36,4 @@ public class BitmapExporterActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void onDestroy() {
-        StaticTransfer.obj = null;
-        super.onDestroy();
-    }
-
 }

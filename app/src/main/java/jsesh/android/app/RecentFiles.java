@@ -45,7 +45,6 @@ public class RecentFiles {
             FileOutputStream fos = context.openFileOutput("recentFiles.txt", 0);
             BufferedWriter bos = new BufferedWriter(new OutputStreamWriter(fos));
             if (list != null) for (String s : list) {
-                System.out.println("FILE"+s);
                 bos.write(s);
                 bos.newLine();
             }

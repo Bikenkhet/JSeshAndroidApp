@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -56,6 +57,7 @@ public class EditActivity extends AppCompatActivity {
     public static final int BITMAP_EXPORTER_REQUEST_CODE = 100;
     public static final int PDF_EXPORTER_REQUEST_CODE = 101;
     public static final int DOCUMENT_PROPERTIES_REQUEST_CODE = 200;
+    public static final int OPEN_FILE_REQUEST_CODE = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class EditActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle(R.string.app_name);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -417,8 +419,7 @@ public class EditActivity extends AppCompatActivity {
                 editor.getWorkflow().setMode('s');
                 return true;
             case R.id.open:
-                StaticTransfer.obj = this;
-                startActivity(new Intent(this, OpenActivity.class));
+                startActivityForResult(new Intent(this, OpenActivity.class), OPEN_FILE_REQUEST_CODE);
                 return true;
             case R.id.open_recent:
                 //NO-OP
@@ -446,7 +447,6 @@ public class EditActivity extends AppCompatActivity {
                 }
             case R.id.save_as:
                 mdcDocument = new MDCDocument(editor.getHieroglyphicTextModel().getModel(), editor.getDrawingSpecifications());
-                StaticTransfer.obj = mdcDocument;
                 new DocumentSaverDialogFragment().show(getSupportFragmentManager(), "save");
                 return true;
             case R.id.import_file:
@@ -511,7 +511,6 @@ public class EditActivity extends AppCompatActivity {
                 startActivityForResult(intent, BITMAP_EXPORTER_REQUEST_CODE);
                 return true;
             case R.id.export_pdf:
-                StaticTransfer.obj = new ExportData(editor.getDrawingSpecifications(), editor.getWorkflow().getCaret(), editor.getHieroglyphicTextModel().getModel(), 1);
                 Intent intent2 = new Intent(this, PDFExporterActivity.class);
                 startActivityForResult(intent2, PDF_EXPORTER_REQUEST_CODE);
                 return true;
@@ -538,22 +537,15 @@ public class EditActivity extends AppCompatActivity {
             switch (requestCode) {
 
                 case READ_REQUEST_CODE:
-                    Uri uri = null;
                     if (data != null) {
-                        uri = data.getData();
-                        MDCDocumentReader reader = new MDCDocumentReader();
-                        try {
-                            mdcDocument = reader.loadFile(new File(uri.getPath()));
-                            InputStream is = getContentResolver().openInputStream(uri);
-
-                            editor.setHieroglyphiTextModel(mdcDocument.getHieroglyphicTextModel());
-                            editor.getDrawingSpecifications().applyDocumentPreferences(mdcDocument.getDocumentPreferences());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (MDCSyntaxError mdcSyntaxError) {
-                            mdcSyntaxError.printStackTrace();
-                        }
+                        Uri uri = data.getData();
+                        FileOpener.openFile(this, uri.getPath());
                     }
+                    break;
+
+                case OPEN_FILE_REQUEST_CODE:
+                    String filename = data.getStringExtra("filename");
+                    FileOpener.openFile(this, filename);
                     break;
 
                 case BITMAP_EXPORTER_REQUEST_CODE:
