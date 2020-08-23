@@ -2,4 +2,8 @@
     <string name="app_name">JSesh Android</string>
 
     <string name="select">Select</string>
+    <string name="cut">Cut</string>
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+
 </resources>

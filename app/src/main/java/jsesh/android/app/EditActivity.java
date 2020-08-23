@@ -283,7 +283,8 @@ public class EditActivity extends AppCompatActivity {
                 editor.paste();
                 return true;
             case R.id.duplicate:
-                //TODO
+                editor.copy();
+                editor.paste();
                 return true;
             case R.id.delete:
                 workflow.doBackspace();
@@ -337,6 +338,7 @@ public class EditActivity extends AppCompatActivity {
                 return true;
             case R.id.edit_group:
                 //TODO
+                Toast.makeText(this, "Not currently supported.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.insert_space:
                 workflow.insertSpace();
@@ -429,6 +431,7 @@ public class EditActivity extends AppCompatActivity {
                 return true;
             case R.id.close:
                 //TODO
+                Toast.makeText(this, "Not currently supported.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.save:
                 if (mdcDocument.getFile() != null) {
@@ -451,6 +454,7 @@ public class EditActivity extends AppCompatActivity {
                 return true;
             case R.id.import_file:
                 //TODO
+                Toast.makeText(this, "Files must currently be moved into Android/data/jsesh.android.app/files", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.export:
                 //NO-OP
@@ -616,18 +620,6 @@ public class EditActivity extends AppCompatActivity {
             //TODO Something went wrong? Though should be impossible
             mdcSyntaxError.printStackTrace();
         }
-    }
-
-    public byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
     }
 
 }

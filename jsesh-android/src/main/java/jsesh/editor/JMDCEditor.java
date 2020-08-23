@@ -119,6 +119,12 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
         super.onCreateContextMenu(menu);
         AndroidUtils.getActivity(getContext()).getMenuInflater().inflate(R.menu.jmdceditor_menu, menu);
 
+        MDCCaret caret = getMDCCaret();
+        if (!caret.hasMark() || caret.getInsertPosition().getIndex() == caret.getMarkPosition().getIndex()) {
+            menu.removeItem(R.id.editor_cut);
+            menu.removeItem(R.id.editor_copy);
+        }
+
         final JMDCEditor editor = this;
         final int length = menu.size();
         for (int index = 0; index < length; index++) {
@@ -128,6 +134,18 @@ public class JMDCEditor extends android.support.v7.widget.AppCompatTextView {
                 public boolean onMenuItemClick(MenuItem item) {
                     if (item.getItemId() == R.id.editor_select) {
                         editor.moveMarkToMouse(eventListener.longPressLocation);
+                        editor.requestFocus();
+                        return true;
+                    } else if (item.getItemId() == R.id.editor_cut) {
+                        editor.cut();
+                        editor.requestFocus();
+                        return true;
+                    } else if (item.getItemId() == R.id.editor_copy) {
+                        editor.copy();
+                        editor.requestFocus();
+                        return true;
+                    } else if (item.getItemId() == R.id.editor_paste) {
+                        editor.paste();
                         editor.requestFocus();
                         return true;
                     }
